@@ -1,20 +1,27 @@
 let img;
 
 function setup() {
-  noCanvas();
+  // create an image using the p5 dom library
+  // call modelReady() when it is loaded
+  img = loadImage("/vc/docs/sketches/lenna.png");
+  createCanvas(512, 512);
+  // set the image size to the size of the canvas
 
-  img = createImage('vc/docs/sketches/lenna.png');
-  img.size(512, 512);
-  img.loadPixels();
+  frameRate(1); // set the frameRate to 1 since we don't need it to be running quickly in this case
 }
 
 function draw() {
-  for(let i = 0; i < img.width; i++) {
-    for(let j = 0; j < img.height; j++) {
-      img.set(i, j, color(255 - red(img.pixels[i + j]), 255 - green(img.pixels[i + j]), 255 - blue(img.pixels[i + j])));
+  background(img);
+
+  loadPixels();
+
+  for(let i = 0; i < width; i++) {
+    for(let j = 0; j < height; j++) {
+      set(i, j, color(255 - red(get(i, j)), 255 - green(get(i, j)), 255 - blue(get(i, j))));
     }
   }
-  
-  img.updatePixels();
-  Image(img, 0, 0);
+
+  updatePixels();
+
+  noLoop();
 }
