@@ -21,3 +21,4 @@
 > :Collapse label=Members
 > 
 > [NN](/docs/members/nn)
+> [Miguel Alejandro Peña Hurtado](/docs/members/miguel-penia)
