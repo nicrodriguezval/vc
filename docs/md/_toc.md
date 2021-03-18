@@ -20,6 +20,6 @@
 
 > :Collapse label=Members
 > 
-> [NN](/docs/members/nn)
+> [Nicolás Rodríguez Valenzuela](/docs/members/nicolas-rodriguez)
 > [Miguel Alejandro Peña Hurtado](/docs/members/miguel-penia)
 > [Ernesto Bastidas Pulido](/docs/members/ernest-bast)
