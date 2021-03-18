@@ -23,3 +23,4 @@
 > [Nicolás Rodríguez Valenzuela](/docs/members/nicolas-rodriguez)
 > [Miguel Alejandro Peña Hurtado](/docs/members/miguel-penia)
 > [Ernesto Bastidas Pulido](/docs/members/ernest-bast)
+> [Verbo Sebastian Camacho Silva](/docs/members/sebastian-camacho)
