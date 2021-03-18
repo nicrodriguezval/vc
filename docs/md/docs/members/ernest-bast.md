@@ -4,7 +4,7 @@
 
 Esta ilusión se basa en que las líneas en realidad son paralelas, pero la imagen hace que se vean torcidas.
 
-![alt text](https://github.com/nicrodriguezval/vc/tree/main/docs/sketches/image.jpg?raw=true)
+![alt text](https://github.com/nicrodriguezval/vc/tree/main/docs/sketches/Paralelas.jpg?raw=true)
 
 ## Bio
 Naci en diciembre de 1999, me gradué del colegio en 2016 e inmediatamente empecé a estudiar sistemas en la Universidad Nacional. Escogí esta carrera debido a que siempre me han gustado las matemáticas y la lógica. 
