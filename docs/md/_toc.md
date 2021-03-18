@@ -22,3 +22,4 @@
 > 
 > [NN](/docs/members/nn)
 > [Miguel Alejandro Peña Hurtado](/docs/members/miguel-penia)
+> [Ernesto Bastidas Pulido](/docs/members/ernest-bast)
