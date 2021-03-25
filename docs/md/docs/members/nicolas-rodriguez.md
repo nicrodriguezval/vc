@@ -12,4 +12,10 @@ Graphic and logical part in [AirlineTicketsApplication](https://github.com/nicro
 
 ## Hobbies
 In my free time I like programming, research and learn about new technologies, listen to almost all kinds of music, spend time with my family, hang out with my friends, play videogames, watch TV series and films, improve my pronunciation, listening comprehension, and grammar in English, and finally, I'd like to learn new languages in a short time.
+
+## Illusion
+Hermann grid
+
+> :P5 sketch=/docs/sketches/nic-illusion.js, width=383, height=383
+
 > :ToCPrevNext
