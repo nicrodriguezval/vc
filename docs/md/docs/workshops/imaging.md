@@ -30,7 +30,7 @@ The markdown of the above sketch looks like:
 > :P5 sketch=/docs/sketches/negaGray.js, width=512, height=512
 ``` 
 
-# Negativo y escala de grises video
+# Negativo y escala de grises videos
 
 > :P5 sketch=/docs/sketches/negaGrayVideo.js, width=512, height=512
 
@@ -40,7 +40,7 @@ The markdown of the above sketch looks like:
 > :P5 sketch=/docs/sketches/negaGrayVideo.js, width=512, height=512
 ``` 
 
-# Kernels
+# Kernels imagenes
 
 > :P5 sketch=/docs/sketches/kernels.js, width=512, height=512
 
@@ -48,6 +48,18 @@ The markdown of the above sketch looks like:
 
 ```md
 > :P5 sketch=/docs/sketches/kernels.js, width=512, height=512
+```
+
+Check the [component specs](/docs/snippets/component) for details.
+
+# Kernels videos
+
+> :P5 sketch=/docs/sketches/kernelsVideo.js, width=512, height=512
+
+The markdown of the above sketch looks like:
+
+```md
+> :P5 sketch=/docs/sketches/kernelsVideo.js, width=512, height=512
 ```
 
 Check the [component specs](/docs/snippets/component) for details.

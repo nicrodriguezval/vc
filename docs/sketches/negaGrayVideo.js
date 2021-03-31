@@ -2,7 +2,7 @@ var vid;
 function setup() {
   createCanvas(512, 512);
   textSize(20);
-  pixelDensity(10);
+  pixelDensity(1);
   vid = createVideo(["/vc/docs/sketches/fingers.mov",
                       "/vc/docs/sketches/fingers.webm"],
                       );
@@ -13,7 +13,7 @@ function setup() {
 
 function draw() {
   // ********************************************************************************
-  // imagen original
+  // video original
   // ********************************************************************************
   image(vid, 0, 0, width/2, height/2)
 
