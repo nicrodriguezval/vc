@@ -11,13 +11,14 @@ function setup() {
 }
 
 function draw() {
+  textSize(32);
   // ********************************************************************************
   // imagen original
   // ********************************************************************************
   image(img, 0, 0, img.width/2, img.height/2);
   
   // ********************************************************************************
-  // imagen en escala de grises
+  // imagen en escala de grises luma
   // ********************************************************************************
   let imgGrayScale = createImage(img.width, img.height)
   imgGrayScale.copy(img, 0,0, img.width, img.height, 0, 0, img.width, img.height)
@@ -39,6 +40,30 @@ function draw() {
   }
   imgGrayScale.updatePixels();
   image(imgGrayScale, img.width/2, 0, img.width/2, img.height/2);
+
+  // ********************************************************************************
+  // imagen en escala de grises promedio RGB
+  // ********************************************************************************
+  let imgGrayScaleProm = createImage(img.width, img.height)
+  imgGrayScaleProm.copy(img, 0,0, img.width, img.height, 0, 0, img.width, img.height)
+  imgGrayScaleProm.loadPixels();
+  img.loadPixels();
+  for (let x = 0; x < img.width; x++) {
+    for (let y = 0; y < img.height; y++) {
+      var index = (x+y*width)*4  
+      let r = img.pixels[index + 0];
+      let g = img.pixels[index + 1];
+      let b = img.pixels[index + 2];
+      // let a = img.pixels[index + 3];
+      let sum = (r + g + b)/3;
+      imgGrayScaleProm.pixels[index + 0] = sum;
+      imgGrayScaleProm.pixels[index + 1] = sum;
+      imgGrayScaleProm.pixels[index + 2] = sum;
+      // img.pixels[index + 3] = sum;
+    }
+  }
+  imgGrayScaleProm.updatePixels();
+  image(imgGrayScaleProm, 0, img.height/2, img.width/2, img.height/2);
   
   // ********************************************************************************
   // negativo imagen
@@ -62,8 +87,11 @@ function draw() {
     }
   }
   imgNegat.updatePixels();
-  image(imgNegat, 0, img.height/2, img.width/2, img.height/2);
+  image(imgNegat, img.width/2, img.height/2, img.width/2, img.height/2);
 
-
-  // image(imgGrayScale, img.width/2, img.height/2, img.width/2, img.height/2);
+  fill(255, 255, 255);
+  text("Original", 0, 25);
+  text("Luma", 256, 25);
+  text("Promedio RGB", 0, 280);
+  text("Negativo", 256, 280);
 }
