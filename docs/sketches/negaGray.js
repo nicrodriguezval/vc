@@ -7,87 +7,74 @@ function preload() {
 function setup() {
   // Create a canvas that's at least the size of the image.
   createCanvas(512, 512);
+  textSize(20);
   noLoop();
 }
 
 function draw() {
-  textSize(32);
   // ********************************************************************************
   // imagen original
   // ********************************************************************************
-  image(img, 0, 0, img.width/2, img.height/2);
+  image(img, 0, 0, width/2, height/2);
   
   // ********************************************************************************
   // imagen en escala de grises luma
   // ********************************************************************************
-  let imgGrayScale = createImage(img.width, img.height)
-  imgGrayScale.copy(img, 0,0, img.width, img.height, 0, 0, img.width, img.height)
+  imgGrayScale = img.get()
   imgGrayScale.loadPixels();
-  img.loadPixels();
-  for (let x = 0; x < img.width; x++) {
-    for (let y = 0; y < img.height; y++) {
-      var index = (x+y*width)*4  
-      let r = img.pixels[index + 0];
-      let g = img.pixels[index + 1];
-      let b = img.pixels[index + 2];
-      // let a = img.pixels[index + 3];
-      let sum = (r*0.3 + g*0.59 + b*0.11);
-      imgGrayScale.pixels[index + 0] = sum;
-      imgGrayScale.pixels[index + 1] = sum;
-      imgGrayScale.pixels[index + 2] = sum;
-      // img.pixels[index + 3] = sum;
-    }
+  for(var i = 0; i < imgGrayScale.pixels.length; i += 4){
+    let r = imgGrayScale.pixels[i + 0];
+    let g = imgGrayScale.pixels[i + 1];
+    let b = imgGrayScale.pixels[i + 2];
+    // let a = imgGrayScale.pixels[i + 3];
+    let sum = (r*0.3 + g*0.59 + b*0.11);
+    imgGrayScale.pixels[i + 0] = sum;
+    imgGrayScale.pixels[i + 1] = sum;
+    imgGrayScale.pixels[i + 2] = sum;
+    // imgGrayScale.pixels[i + 3] = sum;
   }
+
   imgGrayScale.updatePixels();
-  image(imgGrayScale, img.width/2, 0, img.width/2, img.height/2);
+  image(imgGrayScale, width/2, 0, width/2, height/2);
 
   // ********************************************************************************
   // imagen en escala de grises promedio RGB
   // ********************************************************************************
-  let imgGrayScaleProm = createImage(img.width, img.height)
-  imgGrayScaleProm.copy(img, 0,0, img.width, img.height, 0, 0, img.width, img.height)
+  imgGrayScaleProm = img.get()
   imgGrayScaleProm.loadPixels();
-  img.loadPixels();
-  for (let x = 0; x < img.width; x++) {
-    for (let y = 0; y < img.height; y++) {
-      var index = (x+y*width)*4  
-      let r = img.pixels[index + 0];
-      let g = img.pixels[index + 1];
-      let b = img.pixels[index + 2];
-      // let a = img.pixels[index + 3];
-      let sum = (r + g + b)/3;
-      imgGrayScaleProm.pixels[index + 0] = sum;
-      imgGrayScaleProm.pixels[index + 1] = sum;
-      imgGrayScaleProm.pixels[index + 2] = sum;
-      // img.pixels[index + 3] = sum;
-    }
+  for(var i = 0; i < imgGrayScaleProm.pixels.length; i += 4){
+    let r = imgGrayScaleProm.pixels[i + 0];
+    let g = imgGrayScaleProm.pixels[i + 1];
+    let b = imgGrayScaleProm.pixels[i + 2];
+    // let a = imgGrayScaleProm.pixels[i + 3];
+    let sum = (r + g + b)/3;
+    imgGrayScaleProm.pixels[i + 0] = sum;
+    imgGrayScaleProm.pixels[i + 1] = sum;
+    imgGrayScaleProm.pixels[i + 2] = sum;
+    // imgGrayScaleProm.pixels[i + 3] = sum;
   }
   imgGrayScaleProm.updatePixels();
-  image(imgGrayScaleProm, 0, img.height/2, img.width/2, img.height/2);
+  image(imgGrayScaleProm, 0, height/2, width/2, height/2);
   
   // ********************************************************************************
   // negativo imagen
   // ********************************************************************************
-  let imgNegat = createImage(img.width, img.height)
-  imgNegat.copy(img, 0,0, img.width, img.height, 0, 0, img.width, img.height)
+  imgNegat = img.get()
   imgNegat.loadPixels();
-  img.loadPixels();
-  for (let x = 0; x < img.width; x++) {
-    for (let y = 0; y < img.height; y++) {
-      var index = (x+y*width)*4  
-      let r = img.pixels[index + 0];
-      let g = img.pixels[index + 1];
-      let b = img.pixels[index + 2];
-      // let a = img.pixels[index + 3];
-      
-      imgNegat.pixels[index + 0] = 255-r;
-      imgNegat.pixels[index + 1] = 255-g;
-      imgNegat.pixels[index + 2] = 255-b;
-      // img.pixels[index + 3] = sum;
-    }
+  for(var i = 0; i < imgNegat.pixels.length; i += 4){
+    let r = imgNegat.pixels[i + 0];
+    let g = imgNegat.pixels[i + 1];
+    let b = imgNegat.pixels[i + 2];
+    // let a = imgNegat.pixels[i + 3];
+    
+    imgNegat.pixels[i + 0] = 255-r;
+    imgNegat.pixels[i + 1] = 255-g;
+    imgNegat.pixels[i + 2] = 255-b;
+    // imgNegat.pixels[i + 3] = sum;
   }
+
   imgNegat.updatePixels();
-  image(imgNegat, img.width/2, img.height/2, img.width/2, img.height/2);
+  image(imgNegat, width/2, height/2, width/2, height/2);
 
   fill(255, 255, 255);
   text("Original", 0, 25);

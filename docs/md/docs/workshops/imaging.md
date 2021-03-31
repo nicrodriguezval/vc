@@ -20,7 +20,7 @@ Implementar:
 * Exposiciones en las clase(s) subsiguiente(s). Tiempo: 7m (5m presentación del reporte + 2m preguntas).
 Took from the [ml5](https://ml5js.org/) example [here](https://learn.ml5js.org/#/reference/facemesh?id=examples). Also shows how to load an image.
 
-# Negativo y escala de grises
+# Negativo y escala de grises imágenes
 
 > :P5 sketch=/docs/sketches/negaGray.js, width=512, height=512
 
@@ -29,6 +29,17 @@ The markdown of the above sketch looks like:
 ```md
 > :P5 sketch=/docs/sketches/negaGray.js, width=512, height=512
 ``` 
+
+# Negativo y escala de grises video
+
+> :P5 sketch=/docs/sketches/negaGrayVideo.js, width=512, height=512
+
+The markdown of the above sketch looks like:
+
+```md
+> :P5 sketch=/docs/sketches/negaGrayVideo.js, width=512, height=512
+``` 
+
 # Kernels
 
 > :P5 sketch=/docs/sketches/kernels.js, width=512, height=512
