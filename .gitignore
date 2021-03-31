@@ -1,6 +1,7 @@
 .codedoc/node_modules/
 .vscode/
 dist
+hola.sh
 #docs/assets/
 #*.html
 #docs/*.html
