@@ -64,4 +64,27 @@ The markdown of the above sketch looks like:
 
 Check the [component specs](/docs/snippets/component) for details.
 
+# ASCII art (26 símbolos)
+
+Tamaño del superpixel 4x4 (Imagen compuesta por 128x128 símbolos)
+
+> :P5 sketch=/docs/sketches/ascii26.js, width=700, height=700
+
+The markdown of the above sketch looks like:
+
+```md
+> :P5 sketch=/docs/sketches/ascii26.js, width=700, height=700
+```
+# ASCII art (52 símbolos)
+
+Tamaño del superpixel 4x4 (Imagen compuesta por 128x128 símbolos)
+
+> :P5 sketch=/docs/sketches/ascii52.js, width=700, height=700
+
+The markdown of the above sketch looks like:
+
+```md
+> :P5 sketch=/docs/sketches/ascii52.js, width=700, height=700
+```
+
 > :ToCPrevNext
