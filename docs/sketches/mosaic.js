@@ -1,13 +1,4 @@
 let img;
-
-function setup() {
-  img = loadImage('lenna.png');
-}
-
-function draw() {
-  image(img, 0, 0);
-}
-let img;
 let smaller;
 let allImages = [];
 let brightImages = new Array(256);
