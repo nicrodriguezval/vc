@@ -7,6 +7,7 @@
 > [Algovis](/docs/workshops/algovis)
 > [Computer Graphics](/docs/workshops/cg)
 > [HCI](/docs/workshops/hci)
+> [Mosaic](/docs/workshops/mosaic)
 
 > :Collapse label=P5 Code Snippets
 > 

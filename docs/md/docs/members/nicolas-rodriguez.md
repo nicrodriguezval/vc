@@ -16,6 +16,19 @@ In my free time I like programming, research and learn about new technologies, l
 ## Illusion
 Hermann grid
 
-> :P5 sketch=/docs/sketches/nic-illusion.js, width=383, height=383
+>:P5 width=383, height=383
+>
+> let img;
+>
+> function preload() {
+>   img = loadImage("/vc/docs/sketches/grid-illusions.png");
+> }
+>
+> function setup() {
+>   createCanvas(383, 383);
+>   image(img, 0, 0, width, height);
+>
+>   frameRate(1);
+> }
 
 > :ToCPrevNext
