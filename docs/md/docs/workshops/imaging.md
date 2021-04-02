@@ -87,4 +87,14 @@ The markdown of the above sketch looks like:
 > :P5 sketch=/docs/sketches/ascii52.js, width=700, height=700
 ```
 
+# Mosaic
+
+> :P5 sketch=/docs/sketches/mosaic.js, width=512, height=512
+
+The markdown of the above sketch looks like:
+
+```md
+> :P5 sketch=/docs/sketches/mosaic.js, width=512, height=512
+```
+
 > :ToCPrevNext
