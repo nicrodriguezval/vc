@@ -1,7 +1,7 @@
 let img;
 
 function setup() {
-  img = loadImage("/vc/docs/sketches/Paralelas.jpg");
+  img = loadImage("/vc/docs/sketches/Paralelas.png");
   createCanvas(512, 512);
 
 }
