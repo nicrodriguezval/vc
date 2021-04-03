@@ -4,27 +4,7 @@
 
 Esta ilusión se basa en que las líneas en realidad son paralelas, pero la imagen hace que se vean torcidas.
 
-> :P5 lib1=https://unpkg.com/ml5@latest/dist/ml5.min.js, sketch=/docs/sketches/pl.js, width=512, height=512
-
-<script>
-let img;
-
-function setup() {
-  // create an image using the p5 dom library
-  // call modelReady() when it is loaded
-  img = loadImage("/vc/docs/sketches/Paralelas.png");
-  createCanvas(512, 512);
-  // set the image size to the size of the canvas
-
-  frameRate(1); // set the frameRate to 1 since we don't need it to be running quickly in this case
-}
-
-function draw() {
-  background(img);
-
-  noLoop();
-}
-</script>
+ > :P5 lib1=https://unpkg.com/ml5@latest/dist/ml5.min.js, sketch=/docs/sketches/paralelasillusion.js, width=512, height=512
 
 ## Bio
 Naci en diciembre de 1999, me gradué del colegio en 2016 e inmediatamente empecé a estudiar sistemas en la Universidad Nacional. Escogí esta carrera debido a que siempre me han gustado las matemáticas y la lógica. 
