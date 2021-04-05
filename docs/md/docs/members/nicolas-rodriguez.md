@@ -11,17 +11,54 @@ Graphic and logical part in [AirlineTicketsApplication](https://github.com/nicro
 
 
 ## Hobbies
-In my free time I like programming, research and learn about new technologies, listen to almost all kinds of music, spend time with my family, hang out with my friends, play videogames, watch TV series and films, improve my pronunciation, listening comprehension, and grammar in English, and finally, I'd like to learn new languages in a short time.
+In my free time I like programming, research and learn about new technologies, listen to almost all kinds of music, spend time with my family, hang out with my friends, play videogames, watch TV series and films, improve my pronunciation, listening comprehension, and grammar in English.
 
 ## Illusion
-Hermann grid
+
+### Hermann grid
+
+This illusion was reported for the first time in scientific literature by Ludimar Hermann a German physiologist and speech scientist who lived between 1838 and 1914. 
+
+>:P5 width=300, height=365
+>
+> let img;
+>
+> function preload() {
+>   img = loadImage("/vc/docs/sketches/hermann-grid/hermann.jpg");
+> }
+>
+> function setup() {
+>   createCanvas(300, 365);
+>   image(img, 0, 0, width, height);
+>
+>   frameRate(1);
+> }
+
+The illusion occurs because the high contrast black mixed with withe lines (or vice versa as we'll see in a moment) trick the eyes, they send a signal to the brain perceiving a gray circle at each intersection.
 
 >:P5 width=383, height=383
 >
 > let img;
 >
 > function preload() {
->   img = loadImage("/vc/docs/sketches/grid-illusions.png");
+>   img = loadImage("/vc/docs/sketches/hermann-grid/grid-illusions.png");
+> }
+>
+> function setup() {
+>   createCanvas(383, 383);
+>   image(img, 0, 0, width, height);
+>
+>   frameRate(1);
+> }
+
+Sometimes this illusion is called **Hermann-Hering illusion** this is because the German physiologist Ewald Hering noted that the same Illusion occurs when the squares are white.
+
+>:P5 width=383, height=383
+>
+> let img;
+>
+> function preload() {
+>   img = loadImage("/vc/docs/sketches/hermann-grid/hermannhering.png");
 > }
 >
 > function setup() {
