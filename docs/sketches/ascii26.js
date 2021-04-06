@@ -25,6 +25,7 @@ function yuvGrayscale(imag){
     copied.loadPixels();  
     for(let i = 0; i < imag.width; i++) {
       for(let j = 0; j < imag.height; j++) {
+        //Y' component in YUV (below this line) is equivalent to LUMA
         copied.set(i, j, color(0.299*red(imag.get(i, j)) +  0.587*green(imag.get(i, j)) + 0.114*blue(imag.get(i, j))));
       }
     }

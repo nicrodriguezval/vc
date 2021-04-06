@@ -546,6 +546,7 @@ function yuvGrayscale(imag){
     copied.loadPixels();  
     for(let i = 0; i < imag.width; i++) {
       for(let j = 0; j < imag.height; j++) {
+        //Y' component in YUV (below this line) is equivalent to LUMA
         copied.set(i, j, color(0.299*red(imag.get(i, j)) +  0.587*green(imag.get(i, j)) + 0.114*blue(imag.get(i, j))));
       }
     }
@@ -603,6 +604,7 @@ function yuvGrayscale(imag){
     copied.loadPixels();  
     for(let i = 0; i < imag.width; i++) {
       for(let j = 0; j < imag.height; j++) {
+        //Y' component in YUV (below this line) is equivalent to LUMA
         copied.set(i, j, color(0.299*red(imag.get(i, j)) +  0.587*green(imag.get(i, j)) + 0.114*blue(imag.get(i, j))));
       }
     }
@@ -624,6 +626,7 @@ function toASCII52(imag, size, initialX , initialY){
   }
 }
 ```
+Is important to note that for both 26 and 52 versions of ASCII art sketches, we used information about the percentage of opacity of the characters (in monospace font) based on the results published in [Grant Custer's Article](https://observablehq.com/@grantcuster/sort-font-characters-by-percent-of-black-pixels), in which in addition to the percentages, there is the source code which could be easily implemented in this sketches.
 
 ## Mosaic
 
