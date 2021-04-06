@@ -12,7 +12,7 @@ I was born in December 1999, I graduated from college in 2016 and immediately st
 
 ## Interests
 
-Cryptografía, Desarrollo de software, Inteligencia Artificial, Redes Neuronales y Seguridad Informática
+Cryptography, Software Development, Artificial Intelligence, Neural Networks and Computer Security
 
 ## Contributions
 
