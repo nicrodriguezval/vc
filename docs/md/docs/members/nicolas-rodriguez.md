@@ -15,9 +15,9 @@ In my free time I like programming, research and learn about new technologies, l
 
 ## Illusion
 
-### Hermann grid
+### Ludimar Hermann
 
-This illusion was reported for the first time in scientific literature by Ludimar Hermann a German physiologist and speech scientist who lived between 1838 and 1914. 
+Ludimar Hermann was born in Berlin, Germany on October 31, 1838. He was a great physiologist and speech scientist who contributed much in physiology and phonetic fields. He died in Königsberg, Russian on June 5, 1914.
 
 >:P5 width=300, height=365
 >
@@ -34,7 +34,9 @@ This illusion was reported for the first time in scientific literature by Ludima
 >   frameRate(1);
 > }
 
-The illusion occurs because the high contrast black mixed with withe lines (or vice versa as we'll see in a moment) trick the eyes, they send a signal to the brain perceiving a gray circle at each intersection.
+### Hermann grid illusion
+
+This illusion was reported for the first time in scientific literature by Ludimar Hermann, it occurs because the high contrast black mixed with withe lines (or vice versa as we'll see in a moment) trick the eyes, they send a signal to the brain perceiving a gray circle at each intersection. The classical explanation of the physiological mechanism was provided by Baumgartner in 1960. This kind of illusion is called *simultaneous lightness contrast illusion* by the scientists.
 
 >:P5 width=383, height=383
 >
@@ -51,7 +53,7 @@ The illusion occurs because the high contrast black mixed with withe lines (or v
 >   frameRate(1);
 > }
 
-Sometimes this illusion is called **Hermann-Hering illusion** this is because the German physiologist Ewald Hering noted that the same Illusion occurs when the squares are white.
+Sometimes this illusion is called **Hermann-Hering illusion** this is because the German physiologist Ewald Hering noted that the same Illusion occurs when the squares are white and the lines black.
 
 >:P5 width=383, height=383
 >
@@ -67,5 +69,10 @@ Sometimes this illusion is called **Hermann-Hering illusion** this is because th
 >
 >   frameRate(1);
 > }
+
+### References
+
++ [Hermann Gridd - The illusions Index](https://www.illusionsindex.org/i/hermann-grid)
++ [Ludimmar Hermann](https://en.wikipedia.org/wiki/Ludimar_Hermann)
 
 > :ToCPrevNext
