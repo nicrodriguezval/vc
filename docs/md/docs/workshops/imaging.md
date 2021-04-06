@@ -50,7 +50,7 @@ A photographic mosaic is an image or picture that has been split into smaller se
 
 # Code (solution) & results
 
-## Negativo y escala de grises imágenes
+## Negative and grayscale images
 
 > :P5 sketch=/docs/sketches/negaGray.js, width=512, height=512
 
@@ -143,7 +143,7 @@ function draw() {
 }
 ``` 
 
-## Negativo y escala de grises videos
+## Negative and grayscale videos
 
 > :P5 sketch=/docs/sketches/negaGrayVideo.js, width=512, height=512
 
@@ -508,9 +508,9 @@ function draw() {
 }
 ```
 
-## ASCII art (26 símbolos)
+## ASCII art (26 symbols)
 
-Tamaño del superpixel 4x4 (Imagen compuesta por 128x128 símbolos)
+4x4 superpixel size (Image composed of 128x128 symbols)
 
 > :P5 sketch=/docs/sketches/ascii26.js, width=700, height=700
 
@@ -565,9 +565,9 @@ function toASCII26(imag, size, initialX , initialY){
   }
 }
 ```
-## ASCII art (52 símbolos)
+## ASCII art (52 symbols)
 
-Tamaño del superpixel 4x4 (Imagen compuesta por 128x128 símbolos)
+4x4 superpixel size (Image composed of 128x128 symbols)
 
 > :P5 sketch=/docs/sketches/ascii52.js, width=700, height=700
 
