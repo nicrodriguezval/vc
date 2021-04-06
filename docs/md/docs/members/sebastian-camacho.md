@@ -1,17 +1,17 @@
 # Verbo Sebastian Camacho Silva
 
 ## Bio
-Mi nombre es Verbo Sebastian Camacho Silva, vivo con mis padres y mi hermano, estudio ingenieria de sistemas por que me apasiona mucho la tecnología, ademas me gusta la lectura y videos relacionados con esta.
+My name is Verbo Sebastian Camacho Silva, I live with my parents and my brother, I study systems engineering because I am very passionate about technology, I also like reading and videos related to it.
 
 ## Interests
-IA, criptografía, lenguajes de programación, redes neuronales.
+AI, cryptography, programming languages, neural networks.
 
 ## Hobbies
 Escuchar música, ver series y anime.
 
-## Ilusión
-Efecto de color provocado por la fatiga de retina, al exponer los ojos mucho tiempo a una gran cantidad de luz de un determinado color, los conos se fatigan y no responden durante unos segundos, esto nos permite ver una imagen a blanco y negro en color.
-En el gif de abajo mire fijamente el punto negro.
+## Optical illusion
+Color effect caused by retina fatigue, by exposing the eyes for a long time to a large amount of light of a certain color, the cones become fatigued and do not respond for a few seconds, this allows us to see a black and white image in color .
+In the gif below I stared at the black dot.
 
 > :P5 sketch=/docs/sketches/ilusionSebas.js, width=512, height=512
 
