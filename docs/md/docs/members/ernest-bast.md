@@ -1,13 +1,14 @@
 # Ernesto Bastidas Pulido
 
-## Ilusión
+## Ilussionn
 
-Esta ilusión se basa en que las líneas en realidad son paralelas, pero la imagen hace que se vean torcidas.
+This illusion is based on the fact that the lines are actually parallel, but the image makes them look crooked. Contrast polarities appear to be the factor that determines the slanted appearance of horizontal lines.
 
  > :P5 lib1=https://unpkg.com/ml5@latest/dist/ml5.min.js, sketch=/docs/sketches/paralelasillusion.js, width=512, height=512
 
 ## Bio
-Naci en diciembre de 1999, me gradué del colegio en 2016 e inmediatamente empecé a estudiar sistemas en la Universidad Nacional. Escogí esta carrera debido a que siempre me han gustado las matemáticas y la lógica. 
+
+I was born in December 1999, I graduated from college in 2016 and immediately started studying systems at the National University. I chose this career because I have always liked math and logic.
 
 ## Interests
 
@@ -15,10 +16,10 @@ Cryptografía, Desarrollo de software, Inteligencia Artificial, Redes Neuronales
 
 ## Contributions
 
-Backend y certificado https en [Geosmart app](https://github.com/GEGOSMART), varios programas de python [Tesseract OCR](https://en.wikipedia.org/wiki/Tesseract_(software)) and [pyinstaller](https://pypi.org/project/pyinstaller/) module, Backend en [tournity](https://github.com/tournity), distintos programas de inteligencia artificial escritos en Java, etc.
+Backend and https certificate in [Geosmart app](https://github.com/GEGOSMART), lots of python programs [Tesseract OCR](https://en.wikipedia.org/wiki/Tesseract_(software)) and [pyinstaller](https://pypi.org/project/pyinstaller/) module, Backend in [tournity](https://github.com/tournity), different artificial intelligence programs written in Java, etc.
 
 ## Hobbies
 
-Ajedrez, ver fútbol, leer biografías de personas.
+Read biographies of famous people, watch soccer, league of legends.
 
 > :ToCPrevNext
