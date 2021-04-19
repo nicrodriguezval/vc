@@ -92,3 +92,5 @@ A photographic mosaic is an image or picture that has been split into smaller se
 + [Photographic mosaic](https://en.wikipedia.org/wiki/Photographic_mosaic)
 + [Photo mosaic challenge](https://www.youtube.com/watch?v=nnlAH1zDBDE)
 + [History of Photo Mosaics](https://digitalartform.com/2017/01/05/history-of-photo-mosaics/)
+
+> :ToCPrevNext

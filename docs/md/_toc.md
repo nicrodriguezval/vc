@@ -4,6 +4,7 @@
 > 
 > > :Collapse label=Imaging & Video
 > >
+> >[Research](/docs/workshops/imaging/research)
 > >[Grayscale](/docs/workshops/imaging/grayscale)
 > >[Kernels](/docs/workshops/imaging/kernels)
 > >[Ascii Art](/docs/workshops/imaging/ascii)

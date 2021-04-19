@@ -294,3 +294,5 @@ To make image processing we need to use a small matrix that uses different value
 
 + [Kernel (image processing)](https://en.wikipedia.org/wiki/Kernel_(image_processing))
 + [Image Kernels](https://setosa.io/ev/image-kernels/)
+
+> :ToCPrevNext

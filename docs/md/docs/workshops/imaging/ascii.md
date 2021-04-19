@@ -163,3 +163,5 @@ Is important to note that for both 26 and 52 versions of ASCII art sketches, we 
 
 + [ASCII art](https://en.wikipedia.org/wiki/ASCII_art)
 + [Future potentials for ASCII art](http://goto80.com/chipflip/06/)
+
+> :ToCPrevNext

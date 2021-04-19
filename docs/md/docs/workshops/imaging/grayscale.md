@@ -217,3 +217,5 @@ The grayscale is a kind of image which represents the amount of light of every p
 + [Grayscale](https://en.wikipedia.org/wiki/Grayscale)
 + [HSL and HSV](https://en.wikipedia.org/wiki/HSL_and_HSV)
 + [RGB to grayscale conversion](https://stackoverflow.com/questions/17615963/standard-rgb-to-grayscale-conversion)
+
+> :ToCPrevNext
