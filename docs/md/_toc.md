@@ -2,7 +2,13 @@
 
 > :Collapse label=Workshops
 > 
-> [Imaging & Video](/docs/workshops/imaging)
+> > :Collapse label=Imaging & Video
+> >
+> >[Grayscale](/docs/workshops/imaging/grayscale)
+> >[Kernels](/docs/workshops/imaging/kernels)
+> >[Ascii Art](/docs/workshops/imaging/ascii)
+> >[Mosaic](/docs/workshops/imaging/mosaic)
+>
 > [Rendering](/docs/workshops/rendering)
 > [Algovis](/docs/workshops/algovis)
 > [Computer Graphics](/docs/workshops/cg)
