@@ -1,7 +1,7 @@
 let img;
 let n = 3;// tamaño array kernel
 function preload() {
-  img = loadImage("/vc/docs/sketches/lenna.png");
+  img = loadImage("/vc/docs/sketches/mahakala.jpg");
 }
 
 function setup() {
@@ -12,7 +12,7 @@ function setup() {
 
 function draw() {  
   // ********************************************************************************
-  // imagen original
+  // imagen original 
   // ********************************************************************************
   image(img, 0, 0, width/2, height/2);
 
