@@ -5,10 +5,20 @@
 > > :Collapse label=Imaging & Video
 > >
 > >[Research](/docs/workshops/imaging/research)
-> >[Grayscale](/docs/workshops/imaging/grayscale)
-> >[Kernels](/docs/workshops/imaging/kernels)
-> >[Ascii Art](/docs/workshops/imaging/ascii)
-> >[Mosaic](/docs/workshops/imaging/mosaic)
+> >
+> > > :Collapse label=Sofware
+> > >
+> > >[Grayscale](/docs/workshops/imaging/software/grayscale)
+> > >[Kernels](/docs/workshops/imaging/software/kernels)
+> > >[Ascii Art](/docs/workshops/imaging/software/ascii)
+> > >[Mosaic](/docs/workshops/imaging/software/mosaic)
+> >
+> > > :Collapse label=Hardware
+> > >
+> > >[Grayscale](/docs/workshops/imaging/hardware/grayscale)
+> > >[Kernels](/docs/workshops/imaging/hardware/kernels)
+> > >[Ascii Art](/docs/workshops/imaging/hardware/ascii)
+> > >[Mosaic](/docs/workshops/imaging/hardware/mosaic)
 >
 > [Rendering](/docs/workshops/rendering)
 > [Algovis](/docs/workshops/algovis)
