@@ -30,28 +30,59 @@ The grayscale is a kind of image which represents the amount of light of every p
 > >let img;
 > >
 > >function preload() {
-> >theShader = loadShader('/vc/docs/sketches/hardware/grayscale/shader.vert', '/vc/docs/sketches/hardware/grayscale/texture.frag');
-> >img = loadImage('/vc/docs/sketches/lenna.png');
+> >  //theShader = loadShader('/vc/docs/sketches/hardware/grayscale/shader.vert', '/vc/docs/sketches/hardware/grayscale/texture.frag');
+> >  theShader = loadShader('shader.vert', 'texture.frag');
+> >  
+> >  //img = loadImage('/vc/docs/sketches/lenna.png');
+> >  img = loadImage('lenna.png');
 > >}
 > >
 > >function setup() {
-> >createCanvas(512, 512, WEBGL);
-> >shader(theShader);
+> >  createCanvas(512, 512, WEBGL);
+> >  shader(theShader);
+> >  theShader.setUniform('texture', img);
 > >}
 > >
 > >function draw() {
-> >background(0);
-> >
-> >// drawing the shape 
-> >beginShape();
-> >vertex(-width / 2, -height / 2, 0, 0, 0);
-> >vertex(width / 2, -height / 2, 0, 1, 0);
-> >vertex(width / 2, height / 2, 0, 1, 1);
-> >vertex(-width / 2, height / 2, 0, 0, 1);
-> >endShape(CLOSE);
-> >
-> >// we need to use the loaded shader on the canvas
-> >theShader.setUniform('texture', img);
+> >  background(0);
+> >  //Original mode
+> >  theShader.setUniform('mode',0);
+> >  beginShape();
+> >  vertex(-width / 2, -height / 2, 0, 0, 0);
+> >  vertex(0, -height / 2, 0, 1, 0);
+> >  vertex(0, 0, 0, 1, 1);
+> >  vertex(-width / 2, 0, 0, 0, 1);
+> >  endShape(CLOSE);
+> >  
+> >  //Grayscale mode
+> >  theShader.setUniform('mode',1); 
+> >  
+> >  //Average grayscale
+> >  theShader.setUniform('RGBval',[1.0/3.0, 1.0/3.0, 1.0/3.0]);
+> >  beginShape();
+> >  vertex(0, -height / 2, 0, 0, 0);
+> >  vertex(width / 2, -height / 2, 0, 1, 0);
+> >  vertex(width / 2, 0, 0, 1, 1);
+> >  vertex(0, 0, 0, 0, 1);
+> >  endShape(CLOSE);  
+> >  
+> >  //luma grayscale
+> >  theShader.setUniform('RGBval',[0.3, 0.59, 0.11]);
+> >  beginShape();
+> >  vertex(-width / 2, 0, 0, 0, 0);
+> >  vertex(0, 0, 0, 1, 0);
+> >  vertex(0, height / 2, 0, 1, 1);
+> >  vertex(-width / 2, height / 2, 0, 0, 1);
+> >  endShape(CLOSE);  
+> >  
+> >  //Negative mode
+> >  theShader.setUniform('mode',2);
+> >  beginShape();
+> >  vertex(0, 0, 0, 0, 0);
+> >  vertex(width / 2, 0, 0, 1, 0);
+> >  vertex(width / 2, height / 2, 0, 1, 1);
+> >  vertex(0, height / 2, 0, 0, 1);
+> >  endShape(CLOSE);  
 > >}
 > >```
 > 
@@ -108,11 +139,14 @@ The grayscale is a kind of image which represents the amount of light of every p
 >
 > > :Tab title=.frag
 > >
-> >```glsl | texture.frag
+> >```glsl | grayscale.frag
 > >precision mediump float;
 > >
 > >// texture is sent by the sketch
 > >uniform sampler2D texture;
+> >
+> >uniform float RGBval[3];
+> >uniform int mode;
 > >
 > >// interpolated color (same name and type as in vertex shader)
 > >varying vec4 vVertexColor;
@@ -120,13 +154,21 @@ The grayscale is a kind of image which represents the amount of light of every p
 > >varying vec2 vTexCoord;
 > >
 > >void main(){
-> >// texture2D(texture, vTexCoord) samples texture at vTexCoord
-> >// and returns the normalized texel color
-> >// texel color times vVertexColor gives the final normalized pixel color
+> >  // texture2D(texture, vTexCoord) samples texture at vTexCoord
+> >  // and returns the normalized texel color
+> >  // texel color times vVertexColor gives the final normalized pixel color
 > >  
-> >vec4 color = texture2D(texture, vTexCoord) * vVertexColor;
-> >float gray = dot(color.rgb /*color.xyz*/, vec3(1.0 / 3.0, 1.0 / 3.0, 1.0 / 3.0));
-> >gl_FragColor = vec4(vec3(gray), 1.0);
+> >  vec4 color = texture2D(texture, vTexCoord) * vVertexColor;
+> >  //float gray = dot(color.rgb /*color.xyz*/, vec3(1.0 / 3.0, 1.0 / 3.0, 1.0 / 3.0));
+> >  float gray = dot(color.rgb /*color.xyz*/, vec3(RGBval[0],RGBval[1],RGBval[2]));
+> >  vec4 negColor = vec4(vec3(1.0) - vec3(color.r,color.g,color.b),1.0);
+> >  if(mode == 0){ //Original color mode
+> >	gl_FragColor = color;
+> >  } else if(mode == 1){ //Grayscale mode
+> >	gl_FragColor = vec4(vec3(gray), 1.0);
+> >  } else if(mode == 2){ //Negative mode
+> >	gl_FragColor = negColor;
+> >  }
 > >}
 > >```
 
