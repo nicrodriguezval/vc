@@ -2,7 +2,7 @@ let theShader;
 let img;
 
 function preload() {
-  theShader = loadShader('/vc/docs/sketches/hardware/kernels/shader.vert', '/vc/docs/sketches/hardware/kernels/texture.frag');
+  theShader = loadShader('/vc/docs/sketches/hardware/grayscale/shader.vert', '/vc/docs/sketches/hardware/grayscale/texture.frag');
   img = loadImage('/vc/docs/sketches/lenna.png');
 }
 
@@ -24,7 +24,4 @@ function draw() {
 
   // we need to use the loaded shader on the canvas
   theShader.setUniform('texture', img);
-  theShader.setUniform('textureWidth', 800.0);
-  theShader.setUniform('textureHeight', 360.0);
-  theShader.setUniform('kernel', [-1.0, -1.0, -1.0, -1.0, 8.0, -1.0, -1.0, -1.0, -1.0]);
 }
