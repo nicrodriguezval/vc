@@ -21,132 +21,147 @@ To make image processing we need to use a small matrix that uses different value
 > :Tabs
 > > :Tab title=sketch
 > >
-> > > :P5 sketch=/docs/sketches/kernels.js, width=512, height=512
+> > > :P5 sketch=/docs/sketches/hardware/kernels/kernels.js, width=512, height=512
 > 
-> > :Tab title=code
+> > :Tab title=js code
 > > 
 > >```js | kernels.js
+> >let theShader;
 > >let img;
-> >let n = 3;// tamaño array kernel
+> >
 > >function preload() {
-> >  img = loadImage("/vc/docs/sketches/lenna.png");
+> >theShader = loadShader('/vc/docs/sketches/hardware/kernels/shader.vert', '/vc/docs/sketches/hardware/kernels/texture.frag');
+> >img = loadImage('/vc/docs/sketches/lenna.png');
 > >}
 > >
 > >function setup() {
-> >  // Create a canvas that's at least the size of the image.
-> >  createCanvas(512, 512);
-> >  noLoop();
+> >createCanvas(512, 512, WEBGL);
+> >shader(theShader);
 > >}
 > >
-> >function draw() {  
-> >  // ********************************************************************************
-> >  // imagen original
-> >  // ********************************************************************************
-> >  image(img, 0, 0, width/2, height/2);
-> >
-> >  // ********************************************************************************
-> >  // imagen en escala de grises
-> >  // ********************************************************************************
-> >  imgGrayScale = img.get()
-> >  imgGrayScale.loadPixels();
-> >  for (var i = 0; i < imgGrayScale.pixels.length; i+=4) {
-> >    let r = imgGrayScale.pixels[i + 0];
-> >    let g = imgGrayScale.pixels[i + 1];
-> >    let b = imgGrayScale.pixels[i + 2];
-> >    // let a = img.pixels[index + 3];
-> >    let sum = (r*0.3 + g*0.59 + b*0.11);
-> >    imgGrayScale.pixels[i + 0] = sum;
-> >    imgGrayScale.pixels[i + 1] = sum;
-> >    imgGrayScale.pixels[i + 2] = sum;
-> >    // img.pixels[index + 3] = sum;
-> >  }
-> >  imgGrayScale.updatePixels();
-> >  image(imgGrayScale, width/2, 0, width/2, height/2);
-> >
-> >  // outline
-> >  // let kernel = [-1,-1,-1, 
-> >  //   -1,8,-1,
-> >  //   -1,-1,-1]
-> >
-> >  // bottom sobel
-> >  // let kernel = [-1,-2,-1, 
-> >  //               0,0,0,
-> >  //               1,2,1]
-> >
-> >  // rightSobel
-> >  // let kernel = [-1,0,1, 
-> >  //               -2,0,2,
-> >  //               -1,0,1]
-> >
-> >  // leftSobel
-> >  // let kernel = [1,0,-1, 
-> >  //               2,0,-2,
-> >  //               1,0,-1]
-> >
-> >  // emboss
-> >  // let kernel = [-2,-1,0, 
-> >  //               -1,1,1,
-> >  //               0,1,2]
-> >
-> >  // blur
-> >  // let kernel = [0.0625,0.125,0.0625,
-> >  //               0.125,0.25,0.125,
-> >  //               0.0625,0.125,0.0625]
-> >
-> >  // sharpen
-> >  // let kernel = [0,-1,0,
-> >  //               -1,5,-1,
-> >  //               0,-1,0]
-> >
-> >  // edge
-> >  let kernel = [0,-1,0,
-> >                -1,4,-1,
-> >                0,-1,0]
-> >
-> >  // ********************************************************************************
-> >  // kernel imagen original
-> >  // ********************************************************************************
-> >  imgColKer = img.get()
-> >  imgColKer.loadPixels()
-> >  for (var i = 0; i < imgColKer.pixels.length; i+=4) {
-> >    let sumr = 0;
-> >    let sumg = 0;
-> >    let sumb = 0;
-> >    for (let tam = 0; tam < n*n; tam++){
-> >      let valr = imgColKer.pixels[i + tam*4 + 0];
-> >      let valg = imgColKer.pixels[i + tam*4 + 1];
-> >      let valb = imgColKer.pixels[i + tam*4 + 2];
-> >      sumr += kernel[tam] * valr;
-> >      sumg += kernel[tam] * valg;
-> >      sumb += kernel[tam] * valb;
-> >    }
-> >    imgColKer.pixels[i + 0] = sumr;
-> >    imgColKer.pixels[i + 1] = sumg;
-> >    imgColKer.pixels[i + 2] = sumb;
-> >  }
-> >  imgColKer.updatePixels();
-> >  image(imgColKer, 0, height/2, width/2, height/2);
-> >
-> >  // ********************************************************************************
-> >  // kernel escala de grises
-> >  // ********************************************************************************
-> >  for (let x = 0; x < width; x++) {
-> >    for (let y = 0; y < height; y++) {
-> >      var index = (y+x*width)*4;
-> >      let sum = 0; 
-> >      for (let tam = 0; tam < n*n; tam++){
-> >        let val = imgGrayScale.pixels[index + tam*4];
-> >        sum += kernel[tam] * val;
-> >      }
-> >      imgGrayScale.pixels[index + 0] = sum;
-> >      imgGrayScale.pixels[index + 1] = sum;
-> >      imgGrayScale.pixels[index + 2] = sum;
-> >    }
-> >  }
-> >  imgGrayScale.updatePixels();
-> >  image(imgGrayScale, width/2, height/2, width/2, height/2);
+> >function draw() {
+> >background(0);
+> >// drawing the shape 
+> >beginShape();
+> >//fill('red');
+> >vertex(-width / 2, -height / 2, 0, 0, 0);
+> >//fill('blue');
+> >vertex(width / 2, -height / 2, 0, 1, 0);
+> >//fill('green');
+> >vertex(width / 2, height / 2, 0, 1, 1);
+> >vertex(-width / 2, height / 2, 0, 0, 1);
+> >endShape(CLOSE);
+> >// we need to use the shader loaded on the canvas
+> >theShader.setUniform('texture', img);
+> >theShader.setUniform('textureWidth', 800.0);
+> >theShader.setUniform('textureHeight', 360.0);
+> >theShader.setUniform('kernel', [1.0, 0.0, -1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 1.0])
 > >}
 > >```
+> 
+> > :Tab title=.vert
+> >
+> >```glsl | shader.vert
+> >// Precision seems mandatory in webgl
+> >precision highp float;
+> >
+> >// 1. Attributes and uniforms sent by p5.js
+> >
+> >// Vertex attributes and some uniforms are sent by
+> >// p5.js following these naming conventions:
+> >// https://github.com/processing/p5.js/blob/main/contributor_docs/webgl_mode_architecture.md
+> >
+> >// 1.1. Attributes
+> >// vertex position attribute
+> >attribute vec3 aPosition;
+> >
+> >// vertex texture coordinate attribute
+> >attribute vec2 aTexCoord;
+> >
+> >// vertex color attribute
+> >attribute vec4 aVertexColor;
+> >
+> >// 1.2. Matrix uniforms
+> >
+> >// The vertex shader should project the vertex position into clip space:
+> >// vertex_clipspace = vertex * projection * view * model (see the gl_Position below)
+> >// Details here: http://visualcomputing.github.io/Transformations
+> >
+> >// Either a perspective or an orthographic projection
+> >uniform mat4 uProjectionMatrix;
+> >
+> >// modelview = view * model
+> >uniform mat4 uModelViewMatrix;
+> >
+> >// B. varying variable names are defined by the shader programmer:
+> >// vertex color
+> >varying vec4 vVertexColor;
+> >
+> >// vertex texcoord
+> >varying vec2 vTexCoord;
+> >
+> >void main() {
+  > >// copy / interpolate color
+  > >vVertexColor = aVertexColor;
+  > >// copy / interpolate texcoords
+  > >vTexCoord = aTexCoord;
+  > >// vertex projection into clipspace
+  > >gl_Position = uProjectionMatrix * uModelViewMatrix * vec4(aPosition, 1.0);
+> >}
+> >```
+>
+> > :Tab title=.frag
+> >
+> >```glsl | texture.frag
+> >precision mediump float;
+> >
+> >// texture is sent by the sketch
+> >uniform sampler2D texture;
+> >
+> >uniform float textureWidth;
+> >uniform float textureHeight;
+> >uniform float kernel[9];
+> >// interpolated color (same name and type as in vertex shader)
+> >varying vec4 vVertexColor;
+> >// interpolated texcoord (same name and type as in vertex shader)
+> >varying vec2 vTexCoord;
+> >
+> >void main(){
+> >// texture2D(texture, vTexCoord) samples texture at vTexCoord
+> >// and returns the normalized texel color
+> >// texel color times vVertexColor gives the final normalized pixel color
+> >
+> >// vec4 sum = vec4(0.0);
+> >float stepSizeX=1.0/textureWidth;
+> >float stepSizeY=1.0/textureHeight;
+> >
+> >//vec4 color = texture2D(texture, vTexCoord) * vVertexColor;
+> >//float gray = dot(color.rgb /*color.xyz*/, vec3(0.333, 0.333, 0.333));
+> >//gl_FragColor = vec4(vec3(gray), 1.0);
+> >
+> >vec2 tc0=vTexCoord+vec2(-stepSizeX,-stepSizeY);
+> >vec4 col0=texture2D(texture,tc0)*kernel[0];
+> >vec2 tc1=vTexCoord+vec2(0.0,-stepSizeY);
+> >vec4 col1=texture2D(texture,tc1)*kernel[1];
+> >vec2 tc2=vTexCoord+vec2(stepSizeX,-stepSizeY);
+> >vec4 col2=texture2D(texture,tc2)*kernel[2];
+> >vec2 tc3=vTexCoord+vec2(-stepSizeX,0.);
+> >vec4 col3=texture2D(texture,tc3)*kernel[3];
+> >vec2 tc4=vTexCoord+vec2(0.0,0.0);
+> >vec4 col4=texture2D(texture,tc4)*kernel[4];
+> >vec2 tc5=vTexCoord+vec2(stepSizeX,0.0);
+> >vec4 col5=texture2D(texture,tc5)*kernel[5];
+> >vec2 tc6=vTexCoord+vec2(-stepSizeX,stepSizeY);
+> >vec4 col6=texture2D(texture,tc6)*kernel[6];
+> >vec2 tc7=vTexCoord+vec2(0.0,stepSizeY);
+> >vec4 col7=texture2D(texture,tc7)*kernel[7];
+> >vec2 tc8=vTexCoord+vec2(stepSizeX,stepSizeY);
+> >vec4 col8=texture2D(texture,tc8)*kernel[8];
+> >
+> >vec4 sum=col0+col1+col2+col3+col4+col5+col6+col7+col8;
+> > 
+> >gl_FragColor=vec4(vec3(sum),1.)*vVertexColor;
+> >}
 
 ## Kernels videos
 
