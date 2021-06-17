@@ -21,96 +21,114 @@ The grayscale is a kind of image which represents the amount of light of every p
 > :Tabs
 > > :Tab title=sketch
 > >
-> > > :P5 sketch=/docs/sketches/negaGray.js, width=512, height=512
+> > > :P5 sketch=/docs/sketches/hardware/grayscale/grayscale-image.js, width=512, height=512
 > 
-> > :Tab title=code
+> > :Tab title=.js
 > > 
-> >```js | negaGray.js
-> >  let img;
+> >```js | graysale-image.js
+> >let theShader;
+> >let img;
 > >
 > >function preload() {
-> >  img = loadImage("/vc/docs/sketches/lenna.png");
+> >theShader = loadShader('/vc/docs/sketches/hardware/grayscale/shader.vert', '/vc/docs/sketches/hardware/grayscale/texture.frag');
+> >img = loadImage('/vc/docs/sketches/lenna.png');
 > >}
 > >
 > >function setup() {
-> >  // Create a canvas that's at least the size of the image.
-> >  createCanvas(512, 512);
-> >  textSize(20);
-> >  noLoop();
+> >createCanvas(512, 512, WEBGL);
+> >shader(theShader);
 > >}
 > >
 > >function draw() {
-> >  // ********************************************************************************
-> >  // imagen original
-> >  // ********************************************************************************
-> >  image(img, 0, 0, width/2, height/2);
-> >  
-> >  // ********************************************************************************
-> >  // imagen en escala de grises luma
-> >  // ********************************************************************************
-> >  imgGrayScale = img.get()
-> >  imgGrayScale.loadPixels();
-> >  for(var i = 0; i < imgGrayScale.pixels.length; i += 4){
-> >    let r = imgGrayScale.pixels[i + 0];
-> >    let g = imgGrayScale.pixels[i + 1];
-> >    let b = imgGrayScale.pixels[i + 2];
-> >    // let a = imgGrayScale.pixels[i + 3];
-> >    let sum = (r*0.3 + g*0.59 + b*0.11);
-> >    imgGrayScale.pixels[i + 0] = sum;
-> >    imgGrayScale.pixels[i + 1] = sum;
-> >    imgGrayScale.pixels[i + 2] = sum;
-> >    // imgGrayScale.pixels[i + 3] = sum;
-> >  }
+> >background(0);
 > >
-> >  imgGrayScale.updatePixels();
-> >  image(imgGrayScale, width/2, 0, width/2, height/2);
+> >// drawing the shape 
+> >beginShape();
+> >vertex(-width / 2, -height / 2, 0, 0, 0);
+> >vertex(width / 2, -height / 2, 0, 1, 0);
+> >vertex(width / 2, height / 2, 0, 1, 1);
+> >vertex(-width / 2, height / 2, 0, 0, 1);
+> >endShape(CLOSE);
 > >
-> >  // ********************************************************************************
-> >  // imagen en escala de grises promedio RGB
-> >  // ********************************************************************************
-> >  imgGrayScaleProm = img.get()
-> >  imgGrayScaleProm.loadPixels();
-> >  for(var i = 0; i < imgGrayScaleProm.pixels.length; i += 4){
-> >    let r = imgGrayScaleProm.pixels[i + 0];
-> >    let g = imgGrayScaleProm.pixels[i + 1];
-> >    let b = imgGrayScaleProm.pixels[i + 2];
-> >    // let a = imgGrayScaleProm.pixels[i + 3];
-> >    let sum = (r + g + b)/3;
-> >    imgGrayScaleProm.pixels[i + 0] = sum;
-> >    imgGrayScaleProm.pixels[i + 1] = sum;
-> >    imgGrayScaleProm.pixels[i + 2] = sum;
-> >    // imgGrayScaleProm.pixels[i + 3] = sum;
-> >  }
-> >  imgGrayScaleProm.updatePixels();
-> >  image(imgGrayScaleProm, 0, height/2, width/2, height/2);
-> >  
-> >  // ********************************************************************************
-> >  // negativo imagen
-> >  // ********************************************************************************
-> >  imgNegat = img.get()
-> >  imgNegat.loadPixels();
-> >  for(var i = 0; i < imgNegat.pixels.length; i += 4){
-> >    let r = imgNegat.pixels[i + 0];
-> >    let g = imgNegat.pixels[i + 1];
-> >    let b = imgNegat.pixels[i + 2];
-> >    // let a = imgNegat.pixels[i + 3];
-> >    
-> >    imgNegat.pixels[i + 0] = 255-r;
-> >    imgNegat.pixels[i + 1] = 255-g;
-> >    imgNegat.pixels[i + 2] = 255-b;
-> >    // imgNegat.pixels[i + 3] = sum;
-> >  }
-> >
-> >  imgNegat.updatePixels();
-> >  image(imgNegat, width/2, height/2, width/2, height/2);
-> >
-> >  fill(255, 255, 255);
-> >  text("Original", 0, 25);
-> >  text("Luma", 256, 25);
-> >  text("Promedio RGB", 0, 280);
-> >  text("Negativo", 256, 280);
+> >// we need to use the loaded shader on the canvas
+> >theShader.setUniform('texture', img);
 > >}
-> >``` 
+> >```
+> 
+> > :Tab title=.vert
+> >
+> >```glsl | shader.vert
+> >// Precision seems mandatory in webgl
+> >precision highp float;
+> >
+> >// 1. Attributes and uniforms sent by p5.js
+> >
+> >// Vertex attributes and some uniforms are sent by
+> >// p5.js following these naming conventions:
+> >// https://github.com/processing/p5.js/blob/main/contributor_docs/webgl_mode_architecture.md
+> >
+> >// 1.1. Attributes
+> >// vertex position attribute
+> >attribute vec3 aPosition;
+> >
+> >// vertex texture coordinate attribute
+> >attribute vec2 aTexCoord;
+> >
+> >// vertex color attribute
+> >attribute vec4 aVertexColor;
+> >
+> >// 1.2. Matrix uniforms
+> >
+> >// The vertex shader should project the vertex position into clip space:
+> >// vertex_clipspace = vertex * projection * view * model (see the gl_Position below)
+> >// Details here: http://visualcomputing.github.io/Transformations
+> >
+> >// Either a perspective or an orthographic projection
+> >uniform mat4 uProjectionMatrix;
+> >
+> >// modelview = view * model
+> >uniform mat4 uModelViewMatrix;
+> >
+> >// B. varying variable names are defined by the shader programmer:
+> >// vertex color
+> >varying vec4 vVertexColor;
+> >
+> >// vertex texcoord
+> >varying vec2 vTexCoord;
+> >
+> >void main() {
+  > >// copy / interpolate color
+  > >vVertexColor = aVertexColor;
+  > >// copy / interpolate texcoords
+  > >vTexCoord = aTexCoord;
+  > >// vertex projection into clipspace
+  > >gl_Position = uProjectionMatrix * uModelViewMatrix * vec4(aPosition, 1.0);
+> >}
+> >```
+>
+> > :Tab title=.frag
+> >
+> >```glsl | texture.frag
+> >precision mediump float;
+> >
+> >// texture is sent by the sketch
+> >uniform sampler2D texture;
+> >
+> >// interpolated color (same name and type as in vertex shader)
+> >varying vec4 vVertexColor;
+> >// interpolated texcoord (same name and type as in vertex shader)
+> >varying vec2 vTexCoord;
+> >
+> >void main(){
+> >// texture2D(texture, vTexCoord) samples texture at vTexCoord
+> >// and returns the normalized texel color
+> >// texel color times vVertexColor gives the final normalized pixel color
+> >  
+> >vec4 color = texture2D(texture, vTexCoord) * vVertexColor;
+> >float gray = dot(color.rgb /*color.xyz*/, vec3(1.0 / 3.0, 1.0 / 3.0, 1.0 / 3.0));
+> >gl_FragColor = vec4(vec3(gray), 1.0);
+> >}
+> >```
 
 ## Negative and grayscale videos
 

@@ -162,6 +162,7 @@ To make image processing we need to use a small matrix that uses different value
 > > 
 > >gl_FragColor=vec4(vec3(sum),1.)*vVertexColor;
 > >}
+> >```
 
 ## Kernels videos
 

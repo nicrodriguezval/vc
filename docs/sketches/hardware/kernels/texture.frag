@@ -16,14 +16,11 @@ void main(){
   // and returns the normalized texel color
   // texel color times vVertexColor gives the final normalized pixel color
   
-  // vec4 sum = vec4(0.0);
+  // calculating the steps
   float stepSizeX=1.0/textureWidth;
   float stepSizeY=1.0/textureHeight;
-  
-  //vec4 color = texture2D(texture, vTexCoord) * vVertexColor;
-  //float gray = dot(color.rgb /*color.xyz*/, vec3(0.333, 0.333, 0.333));
-  //gl_FragColor = vec4(vec3(gray), 1.0);
-  
+
+  // applying the convolution mask
   vec2 tc0=vTexCoord+vec2(-stepSizeX,-stepSizeY);
   vec4 col0=texture2D(texture,tc0)*kernel[0];
   vec2 tc1=vTexCoord+vec2(0.0,-stepSizeY);
