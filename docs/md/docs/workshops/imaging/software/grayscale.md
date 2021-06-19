@@ -1,4 +1,4 @@
-# Grayscale processing
+<h1 align="center">Grayscale processing</h1>
 
 # Problem statement
 

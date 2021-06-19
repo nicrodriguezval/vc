@@ -1,22 +1,24 @@
 let theShader;
-let img;
+let vid;
 
 function preload() {
   theShader = loadShader('/vc/docs/sketches/hardware/grayscale/shader.vert',
     '/vc/docs/sketches/hardware/grayscale/grayscale.frag');
-  img = loadImage('/vc/docs/sketches/lenna.png');
 }
 
 function setup() {
   createCanvas(512, 512, WEBGL);
+  vid = createVideo(["/vc/docs/sketches/fingers.mov", "/vc/docs/sketches/fingers.webm"]);
+  vid.loop();
+  vid.hide();
   shader(theShader);
-  theShader.setUniform('texture', img);
+  theShader.setUniform('texture', vid);
   noStroke();
-  noLoop();
 }
 
 function draw() {
   background(0);
+
   //Original mode
   theShader.setUniform('mode', 0);
   beginShape();

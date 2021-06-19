@@ -1,4 +1,4 @@
-# Mosaic processing
+<h1 align="center">Mosaic processing</h1>
 
 # Problem statement
 
