@@ -21,7 +21,7 @@ A photographic mosaic is an image or picture that has been split into smaller se
 > :Tabs
 > > :Tab title=sketch
 > >
-> > > :P5 sketch=/docs/sketches/mosaic.js, width=512, height=512 
+> > > :P5 sketch=/docs/sketches/hardware/mosaic/mosaic.js, width=512, height=512 
 > 
 > > :Tab title=code
 > > 

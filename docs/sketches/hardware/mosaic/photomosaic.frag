@@ -4,12 +4,10 @@ precision mediump float;
 uniform sampler2D image;
 // symbol1 is sent by the sketch
 uniform sampler2D symbol1;
-uniform sampler2D symbol2;
 // toggles image display
 uniform bool debug;
 // target horizontal & vertical resolution
 uniform float resolution;
-
 // interpolated color (same name and type as in vertex shader)
 varying vec4 vVertexColor;
 // interpolated texcoord (same name and type as in vertex shader)
