@@ -1,4 +1,4 @@
-# Kernel processing
+<h1 align="center">Kernel processing</h1
 
 # Problem statement
 

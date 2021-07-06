@@ -1,4 +1,4 @@
-# Ascii Art processing
+<h1 align="center">ASCII Art processing</h1>
 
 # Problem statement
 
