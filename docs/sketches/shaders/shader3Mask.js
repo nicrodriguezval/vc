@@ -33,11 +33,15 @@ function draw() {
 
   mapa.set("sharpen",[[0,-1,0],[-1,5,-1],[0,-1,0]]);
   mapa.set("blur",[[0.0625,0.125,0.0625],[0.125,0.25,0.125],[0.0625,0.125,0.0625]]);
+  mapa.set("blur Gaussian",[[1,2,1],[2,4,2],[1,2,1]]);
   mapa.set("emboss",[[-2,-1,0],[-1,1,1],[0,1,2]]);
   mapa.set("edge",[[0,-1,0],[-1,4,-1],[0,-1,0]]);
+  mapa.set("edge detection",[[-1,-1,-1],[0,0,0],[1,1,1]]);
+  mapa.set("edge detect",[[0,1,0],[1,-4,1],[0,1,0]]);
   mapa.set("leftSobel",[[1,0,-1],[2,0,-2],[1,0,-1]]);
   mapa.set("rightSobel",[[-1,0,1],[-2,0,2],[-1,0,1]]);
-  mapa.set("outline",[[ -1, -1, -1],[ -1, 8, -1],[ -1, -1, -1]]);
+  mapa.set("outline",[[-1,-1,-1],[-1,8,-1],[-1,-1,-1]]);
+  mapa.set("top sobel",[[1,2,1],[0,0,0],[-1,-2,-1]]);
   mapa.set("bottom sobel",[[-1,-2,-1],[0,0,0],[1,2,1]]);
 
   sel = createSelect();
@@ -45,11 +49,15 @@ function draw() {
   sel.option("")
   sel.option("sharpen");
   sel.option("blur");
+  sel.option("blur Gaussian");
   sel.option("emboss");
   sel.option("edge");
+  sel.option("edge detection");
+  sel.option("edge detect");
   sel.option("leftSobel");
   sel.option("rightSobel");
   sel.option("outline");
+  sel.option("top sobel");
   sel.option("bottom sobel");
   sel.changed(mySelectEvent);
 
