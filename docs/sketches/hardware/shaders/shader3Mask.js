@@ -6,7 +6,7 @@ let mapa= new Map();
 let kernel;
 
 function preload() {
-  theShader = loadShader("/vc/docs/sketches/shaders/shader.vert", "/vc/docs/sketches/shaders/mask.frag");
+  theShader = loadShader("/vc/docs/sketches/hardware/shaders/shader.vert", "/vc/docs/sketches/hardware/shaders/mask.frag");
   img = loadImage("/vc/docs/sketches/lenna.png");
 }
 
@@ -19,7 +19,7 @@ function setup() {
   shader(theShader);
   theShader.setUniform('texture', img);
   theShader.setUniform('steps', [1/img.width, 1/img.height]);
-  kernel = [[0,-1,0],[-1,5,-1],[0,-1,0]];
+  kernel = [[0,0,0],[0,1,0],[0,0,0]];
 }
 
 function mySelectEvent() {
@@ -31,6 +31,7 @@ function mySelectEvent() {
 
 function draw() {
 
+  mapa.set("identity",[[0,0,0],[0,1,0],[0,0,0]]);
   mapa.set("sharpen",[[0,-1,0],[-1,5,-1],[0,-1,0]]);
   mapa.set("blur",[[0.0625,0.125,0.0625],[0.125,0.25,0.125],[0.0625,0.125,0.0625]]);
   mapa.set("blur Gaussian",[[1,2,1],[2,4,2],[1,2,1]]);
@@ -47,6 +48,7 @@ function draw() {
   sel = createSelect();
   sel.position(10, 10);
   sel.option("")
+  sel.option("identity")
   sel.option("sharpen");
   sel.option("blur");
   sel.option("blur Gaussian");
