@@ -17,6 +17,7 @@ function preload(){
   mosaicShader = loadShader("/vc/docs/sketches/hardware/asciimosaic/shader.vert","/vc/docs/sketches/hardware/asciimosaic/asciimosaic.frag");
   // gifs/arial.gif, gifs/erica-one.gif
   gif = loadImage("/vc/docs/sketches/hardware/asciimosaic/gifs/erica-one.gif");
+  // gif = loadImage("/vc/docs/sketches/hardware/asciimosaic/gifs/arial.gif");
 }
 
 function setup() {

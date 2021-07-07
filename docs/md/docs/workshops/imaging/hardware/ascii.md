@@ -44,54 +44,137 @@ We represented Lenna's photo using this technique.
 > 
 > > :Tab title=code
 > > 
-> >```js | ascii26.js
-> >let pg;
-> >let img, copy1;
+> >```js | w2_asciimosaic.js
+> >let gif;
+> >let mosaic;
+> >let cntImages = 0;
+> >let bright;
+> >var mosaicShader;
+> >var image;
+> >var symbol1, symbol2, symbols;
+> >var debug;
+> >var luma;
+> >var maxWidePixels = 15500 ; //Limite de ancho del mosaico. Depende de la GPU
+> >var speedAlg = 1; //Velocidad del algoritmo que saca el promedio de RGB
+> >var resolution = 80; //cantidad de cuadros
 > >
-> >function preload(){  
-> >  copy1 = loadImage("/vc/docs/sketches/lenna.png"); 
+> >function preload(){
+> >  //Images: images/colormap.png, images/mandrill.png
+> >  image = loadImage("/vc/docs/sketches/hardware/asciimosaic/images/mandrill.png");
+> >  mosaicShader = loadShader("/vc/docs/sketches/hardware/asciimosaic/shader.vert","/vc/docs/sketches/hardware/asciimosaic/asciimosaic.frag");
+> >  // gifs/arial.gif, gifs/erica-one.gif
+> >  gif = loadImage("/vc/docs/sketches/hardware/asciimosaic/gifs/erica-one.gif");
+> >  // gif = loadImage("/vc/docs/sketches/hardware/asciimosaic/gifs/arial.gif");
 > >}
 > >
 > >function setup() {
-> >    createCanvas(700, 700);
-> >    copy1.resize(128,128) //Resizing the image we get the superpixels
-> >    copy1.copy(yuvGrayscale(copy1),0,0,copy1.width,copy1.height,0,0,copy1.width,copy1.height); //Convert to grayscale
-> >    toASCII26(copy1,6,0,0);
+> >  createCanvas(600,600, WEBGL);
+> >  textureMode(NORMAL);
+> >  noStroke();
+> >  shader(mosaicShader);
+> >  let rgbArray;
+> >  if( gif.numFrames() * gif.width > maxWidePixels){ //If generated image is too wide
+> >    let limitFrames = getLimitFramesGIF();
+> >    console.log("Warning, gif size/number of frames too wide! Only picking first "+limitFrames+" frames");
+> >    rgbArray = getOrganizedSymbolsImageFromGIF(speedAlg,limitFrames); 
+> >    mosaicShader.setUniform("parts",limitFrames);
+> >    console.log("parts: "+limitFrames);
+> >  } else {
+> >    rgbArray = getOrganizedSymbolsImageFromGIF(speedAlg);
+> >    mosaicShader.setUniform("parts", gif.numFrames());
+> >    console.log("parts: "+gif.numFrames());  
+> >}
+> >  
+> >  mosaicShader.setUniform("image",image);
+> >  //Se carga la imagen con todas las texturas
+> >  mosaicShader.setUniform("symbols",mosaic);  
+> >  mosaicShader.setUniform("resolution",resolution);
+> >  debug = true;
+> >  luma = true;
+> >  mosaicShader.setUniform("debug",debug);
+> >  mosaicShader.setUniform("luma",luma);
 > >}
 > >
-> >function monospaceChar(content, size, posX, posY){
-> >    fill(0);
-> >    textSize(size);
-> >    textFont("monospace");
-> >    textStyle(BOLD)
-> >    text(content,posX,posY);
+> >function draw() {
+> >  background(33);
+> >  cover(true);
 > >}
 > >
-> >function yuvGrayscale(imag){
-> >    let copied = createGraphics(imag.width,imag.height);
-> >    copied.loadPixels();  
-> >    for(let i = 0; i < imag.width; i++) {
-> >      for(let j = 0; j < imag.height; j++) {
-> >        //Y' component in YUV (below this line) is equivalent to LUMA
-> >        copied.set(i, j, color(0.299*red(imag.get(i, j)) +  0.587*green(imag.get(i, j)) + 0.114*blue(imag.get(i, j))));
-> >      }
-> >    }
-> >    copied.updatePixels();
-> >    return copied;
+> >function cover(texture = false){
+> >  beginShape();
+> >  if(texture){
+> >    vertex(-width / 2, -height /2, 0, 0, 0);
+> >    vertex( width / 2, -height /2, 0, 1, 0);
+> >    vertex( width / 2, height /2, 0, 1, 1);
+> >    vertex( -width / 2, height /2, 0, 0, 1);
+> >  } else {
+> >    vertex(-width / 2, -height /2, 0);
+> >    vertex( width / 2, -height /2, 0);
+> >    vertex( width / 2, height /2, 0);
+> >    vertex( -width / 2, height /2, 0);
 > >  }
-> >
-> >// Opacity information taken from https://observablehq.com/@grantcuster/sort-font-characters-by-percent-of-black-pixels
-> >function getSimilarChar26(number){
-> >  let ordered = "@$M%HKmd5Xah1ytnziLv+\":\'-." //26 ASCII elements, ordered by opacity
-> >  return ordered.substr(Math.floor(number/10),1) //Returns the corresponding string character for determined opacity of the pixel
+> >  endShape(CLOSE);
 > >}
 > >
-> >function toASCII26(imag, size, initialX , initialY){
-> >  for(let i = 0; i < imag.width; i++) {
-> >    for(let j = 0; j < imag.height; j++) {
-> >      monospaceChar(getSimilarChar26(red(imag.get(i, j))),size,0.9*size*i + initialX,0.9*size*j + initialY); //Since the image is already gray, all rgb channels have the same value, we can pick any value
-> >    }
+> >function keyPressed(){
+> >  if(key === "d"){
+> >    debug = !debug;
+> >    mosaicShader.setUniform("debug",debug);
 > >  }
+> >  if(key === "g"){
+> >    luma = !luma;
+> >    mosaicShader.setUniform("luma",luma);
+> >  }
+> >}
+> >
+> >function getOrganizedSymbolsImageFromGIF(speed,maxFrames = gif.numFrames()){
+> >  const tempValues = [];
+> >  for(let frameNumber = 0 ; frameNumber < maxFrames;frameNumber++){
+> >     gif.setFrame(frameNumber);
+> >      let temp = 0;
+> >      for (let i = 0; i < gif.width; i += speed) {
+> >       for (let j = 0; j < gif.height; j += speed) {
+> >          let c = gif.get(i,j);    
+> >          temp += (c[0] + c[1] + c[2]);
+> >       }
+> >     }
+> >     //console.log("temp: "+temp); 
+> >     tempValues.push(temp);  
+> >   }
+> >   var min = Math.min(...tempValues);
+> >   var max = Math.max(...tempValues);
+> >   var maxFinal = max + 1 ;
+> >   while(min != maxFinal){
+> >     //console.log("tempValues: "+tempValues);
+> >     //console.log("length: "+tempValues.length);
+> >     //console.log("min: "+min); 
+> >     var ind = tempValues.indexOf(min);
+> >     addToMosaic(ind);
+> >     tempValues.splice(ind, 1,maxFinal); 
+> >     min = Math.min(...tempValues);
+> >   }
+> >   //mosaic.save("mosaic", "png");
+> >   cntImages = 0;
+> >}
+> >
+> >function addToMosaic(index){
+> >    gif.setFrame(index);
+> >    let img = createImage(gif.width * (cntImages + 1), gif.height);
+> >     if(cntImages != 0){
+> >       img.copy(mosaic,0,0,mosaic.width,mosaic.height,0,0,mosaic.width,mosaic.height);
+> >     }
+> >     mosaic = createImage(gif.width * (cntImages + 1), gif.height);
+> >     img.copy(gif,0,0,gif.width,gif.height,gif.width * cntImages,0,gif.width,gif.height);
+> >     mosaic.copy(img,0,0,img.width,img.height,0,0,img.width,img.height); 
+> >     cntImages++;
+> >}
+> >
+> >function getLimitFramesGIF(){
+> >  let limit = 0;
+> >  while(gif.width * limit < maxWidePixels){
+> >    limit++;
+> >  }
+> >  return limit;
 > >}
 > >```
 
