@@ -16,7 +16,7 @@ Introducir el análisis de imágenes al implementar las siguientes operaciones d
 
 ASCII art is a technique that represents an image into characters of the ASCII standard. This technique of representing images using characters is old, one of the first representations we know is "Simmias de Rodas. El hacha, ca. 300 a. C." which looks like the below image.
 
->:P5 width=280, height=415
+<!-- >:P5 width=280, height=415
 >
 > let img;
 >
@@ -29,7 +29,7 @@ ASCII art is a technique that represents an image into characters of the ASCII s
 >   image(img, 0, 0, width, height);
 >
 >   frameRate(1);
-> }
+> } -->
 
 We represented Lenna's photo using this technique.
 
@@ -40,7 +40,7 @@ We represented Lenna's photo using this technique.
 > :Tabs
 > > :Tab title=sketch
 > >
-> > > :P5 sketch=/docs/sketches/ascii26.js, width=700, height=700
+> > > :P5 sketch=/docs/sketches/hardware/asciimosaic/w2_asciimosaic.js, width=600, height=600
 > 
 > > :Tab title=code
 > > 

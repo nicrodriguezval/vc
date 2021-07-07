@@ -1,9 +1,5 @@
 precision mediump float;
 
-//Set a constant to max number of textures
-#define MAXTEXTURES 256
-#define MAXTEXTURES_RGB MAXTEXTURES * 3
-
 // image is sent by the sketch
 uniform sampler2D image;
 //symbols texture is sent by the sketch
@@ -12,19 +8,17 @@ uniform sampler2D symbols;
 uniform int parts;
 // toggles image display
 uniform bool debug;
+//toggles luma grayscale
+uniform bool luma;
 // target horizontal & vertical resolution
 uniform float resolution;
 
-//Defines the rgb values for the symbols texture
-uniform float rgbValues[MAXTEXTURES_RGB]; //Max number of data from textures
 
 // interpolated color (same name and type as in vertex shader)
 varying vec4 vVertexColor;
 // interpolated texcoord (same name and type as in vertex shader)
 varying vec2 vTexCoord;
 
-//Declares function to be used in the program
-int minDistIndex (vec3 rgbValue);
 
 void main(){
 	// remap symbolCoord to [0.0, resolution] in R
@@ -42,33 +36,24 @@ void main(){
 		gl_FragColor = index * vVertexColor;
 	} else {
 		float parts_f = float(parts);
- 		float div = 1.0 / parts_f;  //Computes de division of the texture symbols
-		vec3 values = index.xyz;
-		int minIndex = 15;
-		minIndex = minDistIndex(values);
-		for(int i = 0; i < MAXTEXTURES; i++){ 
+ 		float div = 1.0 / parts_f;  //Computes de division of the texture symbols 
+		float gray = 0.0;
+		if(luma){
+			//Luma grayscale
+			gray = (index.x * 0.3) + (index.y * 0.59) + (index.z * 0.11); //Computes the magnitude of the vector
+		} else {
+			//Average grayscale
+			gray = (index.x + index.y + index.z) / 3.0; //Computes the magnitude of the vector 
+		}
+			
+		for(int i = 0; i < 100000; i++){ //Loop to a very large number
 			if(i == parts) break;
 			float i_f = float(i);
-			if( minIndex == i ){ 
+			if( (gray > div * i_f) && (gray < div * (i_f + 1.0))){ //If magnitude is inside a division of the texture symbols
 				//Divides the coords to only print one part of the image
 				//And after sums a vector that begin to print in the actual division
 				gl_FragColor = texture2D(symbols, (symbolCoord / vec2(parts_f,1.0)) + vec2(div*i_f,0.0) ) * vVertexColor;
 			}
-		}
+		} 
 	}
-}
-
-int minDistIndex (vec3 rgbValue){
-	float dist = 50000.0;
-	int ind = 0;
-	for(int i = 0; i < MAXTEXTURES; i++){ 
-		if(i == parts) break;
-		//Picks the closest rgb vector 
-		float temp = distance(rgbValue, vec3(rgbValues[(i*3)+0],rgbValues[(i*3)+1],rgbValues[(i*3)+2]));
-		if( temp < dist){
-			dist = temp;
-			ind = i;
-		}  
-	}
-	return ind;
 }

@@ -1,5 +1,5 @@
 precision mediump float;
-
+precision mediump int;
 // texture is sent by the sketch
 uniform sampler2D texture;
 uniform vec2 steps;
@@ -7,6 +7,12 @@ uniform vec2 steps;
 uniform vec3 ku;
 uniform vec3 km;
 uniform vec3 kd;
+
+// =====================================
+uniform vec2 mouse;
+uniform vec2 resolution;
+uniform sampler2D texImg;
+// =====================================
 
 // uniform float uKernel[9];
 
@@ -16,6 +22,19 @@ varying vec4 vVertexColor;
 varying vec2 vTexCoord;
 
 void main() {
+    // =====================================    
+    // //calc distance to mouse
+    // float dist = sqrt((vTexCoord.x-mouse.x)*(vTexCoord.x-mouse.x)+(vTexCoord.y-mouse.y)*(vTexCoord.y-mouse.y));
+    
+    // set the output color, it’s RGBA 0-1, not 0-255.
+    // gl_FragColor = vec4(img.r+dist,img.g+dist,img.b+dist, 1.0); 
+
+    vec2 st = gl_FragCoord.xy/resolution;
+    float y = mouse.y * st.y;
+    float x = st.x * mouse.x;
+    // vec3 color = vec3(x,y,0.0);
+    // gl_FragColor = vec4(color,1.0);
+    // =====================================
 
     vec2 tc0 = vTexCoord + vec2(-steps.x, -steps.y);
     vec2 tc1 = vTexCoord + vec2(0.0, -steps.y);

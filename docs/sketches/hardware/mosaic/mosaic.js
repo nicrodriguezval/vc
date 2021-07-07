@@ -4,10 +4,10 @@ var symbol1, symbol2;
 var debug;
 
 function preload() {
-  image = loadImage('/vc/docs/sketches/lenna.png');
-  symbol1 = loadImage('/vc/docs/sketches/dataset/image0.jpg');
-  mosaic = loadShader('/vc/docs/sketches/hardware/mosaic/shader.vert',
-    '/vc/docs/sketches/hardware/mosaic/photomosaic.frag');
+  image = loadImage("/vc/docs/sketches/lenna.png");
+  symbol1 = loadImage("/vc/docs/sketches/dataset/image0.jpg");
+  mosaic = loadShader("/vc/docs/sketches/hardware/mosaic/shader.vert",
+    "/vc/docs/sketches/hardware/mosaic/photomosaic.frag");
 }
 
 function setup() {
@@ -15,11 +15,11 @@ function setup() {
   textureMode(NORMAL);
   noStroke();
   shader(mosaic);
-  mosaic.setUniform('image', image);
-  mosaic.setUniform('symbol1', symbol1);
-  mosaic.setUniform('resolution', 10);
+  mosaic.setUniform("image", image);
+  mosaic.setUniform("symbol1", symbol1);
+  mosaic.setUniform("resolution", 10);
   debug = true;
-  mosaic.setUniform('debug', debug);
+  mosaic.setUniform("debug", debug);
 }
 
 function draw() {
@@ -44,8 +44,8 @@ function cover(texture = false) {
 }
 
 function keyPressed() {
-  if (key === 'd') {
+  if (key === "d") {
     debug = !debug;
-    mosaic.setUniform('debug', debug);
+    mosaic.setUniform("debug", debug);
   }
 }
