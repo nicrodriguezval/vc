@@ -10,57 +10,148 @@ var luma;
 var maxWidePixels = 15500 ; //Limite de ancho del mosaico. Depende de la GPU
 var speedAlg = 1; //Velocidad del algoritmo que saca el promedio de RGB
 var resolution = 80; //cantidad de cuadros
+let rgbArray = [];
 let BGoption= new Map();
 let BGselector;
 //Preloads all images that are options in the selector
 var mandrillImage;
 var colormapImage;
+var rgbArrayObj;
+
+let Symbolsoption = new Map();
+let Symbolsselector;
+//Preloads all images that are options in the selector
+var shrekImage;
+var paintingsImage;
+var landscapesImage;
+var beeMovieImage;
+let GIFoption = new Map();
+//Preloads all images that are options in the selector
+var GIFshrek;
+var GIFpaintings;
+var GIFlandscapes;
+var GIFbeeMovie;
+let JSONoption = new Map();
+//Preloads all images that are options in the selector
+var JSONshrek;
+var JSONpaintings;
+var JSONlandscapes;
+var JSONbeeMovie;
 
 function preload(){
-  //Images: images/colormap.png, images/mandrill.png
   image = loadImage("/vc/docs/sketches/hardware/mosaic/images/mandrill.png");
-  mosaicShader = loadShader("/vc/docs/sketches/hardware/mosaic/shader.vert","/vc/docs/sketches/hardware/mosaic/photomosaic.frag");
-  //gifs: gifs/shrek.gif, gifs/paintings.gif
-  // gif = loadImage("/vc/docs/sketches/hardware/mosaic/gifs/shrek.gif");
-  gif = loadImage("/vc/docs/sketches/hardware/mosaic/gifs/bee-movie.gif");
+  //Images: images/colormap.png, images/mandrill.png
+  mandrillImage = loadImage("/vc/docs/sketches/hardware/mosaic/images/mandrill.png");
+  colormapImage = loadImage("/vc/docs/sketches/hardware/mosaic/images/colormap.png");
+  BGoption.set("mandrill",mandrillImage);
+  BGoption.set("colormap",colormapImage);
+  shrekImage = loadImage("/vc/docs/sketches/hardware/mosaic/gifs/generated/shrek.png");
+  paintingsImage = loadImage("/vc/docs/sketches/hardware/mosaic/gifs/generated/paintings.png");
+  landscapesImage = loadImage("/vc/docs/sketches/hardware/mosaic/gifs/generated/landscapes.png");
+  beeMovieImage = loadImage("/vc/docs/sketches/hardware/mosaic/gifs/generated/bee-movie.png");
+  Symbolsoption.set("shrek",shrekImage);
+  Symbolsoption.set("paintings",paintingsImage);
+  Symbolsoption.set("landscapes",landscapesImage);
+  Symbolsoption.set("bee-movie",beeMovieImage);
+  GIFshrek = loadImage('/vc/docs/sketches/hardware/mosaic/gifs/shrek.gif');
+  GIFpaintings = loadImage('/vc/docs/sketches/hardware/mosaic/gifs/paintings.gif');
+  GIFlandscapes = loadImage('/vc/docs/sketches/hardware/mosaic/gifs/landscapes.gif');
+  GIFbeeMovie = loadImage('/vc/docs/sketches/hardware/mosaic/gifs/bee-movie.gif');
+  GIFoption.set("shrek",GIFshrek);
+  GIFoption.set("paintings",GIFpaintings);
+  GIFoption.set("landscapes",GIFlandscapes);
+  GIFoption.set("bee-movie",GIFbeeMovie);
+  JSONshrek = loadJSON('/vc/docs/sketches/hardware/mosaic/gifs/generated/shrek.json');
+  JSONpaintings = loadJSON('/vc/docs/sketches/hardware/mosaic/gifs/generated/paintings.json');
+  JSONlandscapes = loadJSON('/vc/docs/sketches/hardware/mosaic/gifs/generated/landscapes.json');
+  JSONbeeMovie = loadJSON('/vc/docs/sketches/hardware/mosaic/gifs/generated/bee-movie.json');
+  JSONoption.set("shrek",JSONshrek);
+  JSONoption.set("paintings",JSONpaintings);
+  JSONoption.set("landscapes",JSONlandscapes);
+  JSONoption.set("bee-movie",JSONbeeMovie);
+  //Default values at the beggining
+  image = loadImage('/vc/docs/sketches/hardware/mosaic/images/mandrill.png');
+  mosaicShader = loadShader('/vc/docs/sketches/hardware/mosaic/shader.vert','/vc/docs/sketches/hardware/mosaic/photomosaic.frag');
+  //gifs: gifs/shrek.gif, gifs/paintings.gif, gifs/landscapes.gif, gifs/bee-movie.gif
+  gif = loadImage('/vc/docs/sketches/hardware/mosaic/gifs/shrek.gif');
+  rgbArrayObj = loadJSON('/vc/docs/sketches/hardware/mosaic/gifs/generated/shrek.json');
+  mosaic = loadImage('/vc/docs/sketches/hardware/mosaic/gifs/generated/shrek.png');
+  console.log("rgbArrayObj",rgbArrayObj);
   
 }
 
 function setup() {
+  for(let e = 0; e < Object.keys(rgbArrayObj).length; e++){
+    rgbArray.push(rgbArrayObj[e]);
+  }
+  //console.log("rgbArray",rgbArray);
   createCanvas(600,600, WEBGL);
   textureMode(NORMAL);
   noStroke();
   shader(mosaicShader);
-  let rgbArray;
-  if( gif.numFrames() * gif.width > maxWidePixels){ //If generated image is too wide
-    let limitFrames = getLimitFramesGIF();
-    console.log("Warning, gif size/number of frames too wide! Only picking first "+limitFrames+" frames");
-    rgbArray = getRGBArrayAndMosaicImageFromGIF(speedAlg,limitFrames); 
-    mosaicShader.setUniform("parts",limitFrames);
-    console.log("parts: "+limitFrames);
-  } else {
-    rgbArray = getRGBArrayAndMosaicImageFromGIF(speedAlg);
-    mosaicShader.setUniform("parts", gif.numFrames());
-    console.log("parts: "+gif.numFrames());  
-}
-  //rgbArray = fillArrayZeros(256);
+  
+  //Background image selector
+  BGselector = createSelect();
+  BGselector.position(10, 10);
+  BGselector.option("mandrill");
+  BGselector.option("colormap");
+  //Symbols image selector
+  Symbolsselector = createSelect();
+  Symbolsselector.position(90, 10);
+  Symbolsselector.option("shrek");
+  Symbolsselector.option("paintings");
+  Symbolsselector.option("landscapes");
+  Symbolsselector.option("bee-movie");
+  
+  mosaicShader.setUniform('parts', gif.numFrames());
 
-  mosaicShader.setUniform("image",image);
+  //Exportar el arreglo de valores rgb a un .json
+  //createStringDict(rgbArray).saveJSON("rgbArray");
+  
+  mosaicShader.setUniform('image',image);
   //Se carga la imagen con todas las texturas
-  mosaicShader.setUniform("symbols",mosaic);
+  mosaicShader.setUniform('symbols',mosaic);
   //Se ingresa la cantidad de texturas presentes en la imagen
   
-  mosaicShader.setUniform("rgbValues",rgbArray);
-  mosaicShader.setUniform("resolution",resolution);
+  mosaicShader.setUniform('rgbValues',rgbArray);
+  mosaicShader.setUniform('resolution',resolution);
   debug = true;
   luma = true;
-  mosaicShader.setUniform("debug",debug);
-  mosaicShader.setUniform("luma",luma);
+  mosaicShader.setUniform('debug',debug);
+  mosaicShader.setUniform('luma',luma);
 }
+
+
 
 function draw() {
   background(33);
+  BGselector.changed(BGImageSelectEvent);
+  Symbolsselector.changed(GIFImageSelectEvent);
   cover(true);
+}
+
+function BGImageSelectEvent() {
+  let nameImage = BGselector.value();
+  image = BGoption.get(nameImage);
+  mosaicShader.setUniform("image",image);
+  // console.log(kernel);
+  redraw();
+}
+
+function GIFImageSelectEvent() {
+  let nameImage = Symbolsselector.value();
+  mosaic = Symbolsoption.get(nameImage);
+  gif = GIFoption.get(nameImage);
+  rgbArrayObj = JSONoption.get(nameImage);
+  rgbArray = [];
+  for(let e = 0; e < Object.keys(rgbArrayObj).length; e++){
+    rgbArray.push(rgbArrayObj[e]);
+  }
+  mosaicShader.setUniform('rgbValues',rgbArray);
+  mosaicShader.setUniform('parts',gif.numFrames());
+  mosaicShader.setUniform("symbols",mosaic);
+  // console.log(kernel);
+  redraw();
 }
 
 function cover(texture = false){
@@ -80,67 +171,12 @@ function cover(texture = false){
 }
 
 function keyPressed(){
-  if(key === "d"){
+  if(key === 'd'){
     debug = !debug;
-    mosaicShader.setUniform("debug",debug);
+    mosaicShader.setUniform('debug',debug);
   }
-  if(key === "g"){
+  if(key === 'g'){
     luma = !luma;
-    mosaicShader.setUniform("luma",luma);
+    mosaicShader.setUniform('luma',luma);
   }
-}
-
-function getRGBArrayAndMosaicImageFromGIF(speed,maxFrames = gif.numFrames()){
-  const tempValues = [];
-  for(let frameNumber = 0 ; frameNumber < maxFrames;frameNumber++){
-     gif.setFrame(frameNumber);
-      
-      let r = 0,g = 0,b = 0;
-      let cntPixels = 1;
-      for (let i = 0; i < gif.width; i += speed) {
-       for (let j = 0; j < gif.height; j += speed) {
-          let c = gif.get(i,j);    
-          //temp += (c[0] + c[1] + c[2]);
-          r += c[0];
-          g += c[1];
-          b += c[2];
-         cntPixels++;  
-       }
-     }
-     r = r/(cntPixels*255);
-     g = g/(cntPixels*255);
-     b = b/(cntPixels*255);
-     //let temp = [];
-     //temp.push(r,g,b);
-     //console.log("temp: "+temp); 
-     //tempValues.push(temp);
-     tempValues.push(r,g,b);
-     addToMosaic(frameNumber);
-   }
-   //console.log("tempValues: "+tempValues);
-   //console.log("tempValues.length: "+tempValues.length);
-   //mosaic.save("mosaic", "png");
-   cntImages = 0;
-   return tempValues;
-}
-
-
-function addToMosaic(index){
-    gif.setFrame(index);
-    let img = createImage(gif.width * (cntImages + 1), gif.height);
-     if(cntImages != 0){
-       img.copy(mosaic,0,0,mosaic.width,mosaic.height,0,0,mosaic.width,mosaic.height);
-     }
-     mosaic = createImage(gif.width * (cntImages + 1), gif.height);
-     img.copy(gif,0,0,gif.width,gif.height,gif.width * cntImages,0,gif.width,gif.height);
-     mosaic.copy(img,0,0,img.width,img.height,0,0,img.width,img.height); 
-     cntImages++;
-}
-
-function getLimitFramesGIF(){
-  let limit = 0;
-  while(gif.width * limit < maxWidePixels){
-    limit++;
-  }
-  return limit;
 }
