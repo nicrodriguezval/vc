@@ -10,6 +10,11 @@ var luma;
 var maxWidePixels = 15500 ; //Limite de ancho del mosaico. Depende de la GPU
 var speedAlg = 1; //Velocidad del algoritmo que saca el promedio de RGB
 var resolution = 80; //cantidad de cuadros
+let BGoption= new Map();
+let BGselector;
+//Preloads all images that are options in the selector
+var mandrillImage;
+var colormapImage;
 
 function preload(){
   //Images: images/colormap.png, images/mandrill.png
@@ -22,7 +27,7 @@ function preload(){
 }
 
 function setup() {
-    createCanvas(600,600, WEBGL);
+  createCanvas(600,600, WEBGL);
   textureMode(NORMAL);
   noStroke();
   shader(mosaicShader);
@@ -38,7 +43,6 @@ function setup() {
     mosaicShader.setUniform("parts", gif.numFrames());
     console.log("parts: "+gif.numFrames());  
 }
-  
   //rgbArray = fillArrayZeros(256);
 
   mosaicShader.setUniform("image",image);

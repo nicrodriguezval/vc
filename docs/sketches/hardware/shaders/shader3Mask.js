@@ -11,7 +11,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(710, 400, WEBGL);
+  createCanvas(512, 512, WEBGL);
   // perspective(PI/3.0, width/height, 0.1, 500)
   ortho(-width/2, width/2, -height/2, height/2);
   noStroke();
@@ -20,16 +20,6 @@ function setup() {
   theShader.setUniform('texture', img);
   theShader.setUniform('steps', [1/img.width, 1/img.height]);
   kernel = [[0,0,0],[0,1,0],[0,0,0]];
-}
-
-function mySelectEvent() {
-  let namekernel = sel.value();
-  kernel = mapa.get(namekernel);
-  // console.log(kernel);
-  redraw();
-}
-
-function draw() {
 
   mapa.set("identity",[[0,0,0],[0,1,0],[0,0,0]]);
   mapa.set("sharpen",[[0,-1,0],[-1,5,-1],[0,-1,0]]);
@@ -47,7 +37,6 @@ function draw() {
 
   sel = createSelect();
   sel.position(10, 10);
-  sel.option("")
   sel.option("identity")
   sel.option("sharpen");
   sel.option("blur");
@@ -61,6 +50,18 @@ function draw() {
   sel.option("outline");
   sel.option("top sobel");
   sel.option("bottom sobel");
+
+}
+
+function mySelectEvent() {
+  let namekernel = sel.value();
+  kernel = mapa.get(namekernel);
+  // console.log(kernel);
+  redraw();
+}
+
+function draw() {
+
   sel.changed(mySelectEvent);
 
   theShader.setUniform('ku', kernel[0]);
@@ -79,6 +80,4 @@ function draw() {
   // fill('yellow')
   vertex(-width / 2, height / 2, 0, 0, 1);
   endShape(CLOSE);
-
-  orbitControl();
 }
