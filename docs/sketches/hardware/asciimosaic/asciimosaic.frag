@@ -49,7 +49,7 @@ void main(){
 		for(int i = 0; i < 100000; i++){ //Loop to a very large number
 			if(i == parts) break;
 			float i_f = float(i);
-			if( (gray > div * i_f) && (gray < div * (i_f + 1.0))){ //If magnitude is inside a division of the texture symbols
+			if( (gray >= div * i_f) && (gray <= div * (i_f + 1.0))){ //If magnitude is inside a division of the texture symbols
 				//Divides the coords to only print one part of the image
 				//And after sums a vector that begin to print in the actual division
 				gl_FragColor = texture2D(symbols, (symbolCoord / vec2(parts_f,1.0)) + vec2(div*i_f,0.0) ) * vVertexColor;
