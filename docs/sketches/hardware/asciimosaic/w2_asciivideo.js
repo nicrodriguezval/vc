@@ -1,4 +1,5 @@
 let gif;
+let vid;
 let mosaic;
 let cntImages = 0;
 let bright;
@@ -24,13 +25,6 @@ let GIFoption = new Map();
 //Preloads all images that are options in the selector
 var GIFarial;
 var GIFericaOne;
-//Buttons and Inputs
-var resInput;
-var setResButton;
-var debugButton;
-var lumaButton;
-//Offset
-let rightOffset = 100;
 
 function preload(){
   //Images: images/colormap.png, images/mandrill.png
@@ -56,38 +50,27 @@ function preload(){
 }
 
 function setup() {
-  createCanvas(600 + rightOffset,600, WEBGL);
+  createCanvas(600,600, WEBGL);
   textureMode(NORMAL);
   noStroke();
   shader(mosaicShader);
+
+  vid = createVideo(["/vc/docs/sketches/fingers.mov", "/vc/docs/sketches/fingers.webm"]);
+  vid.loop();
+  vid.hide();
+
   //Background image selector
   BGselector = createSelect();
-  BGselector.position(width - rightOffset + 10, 10);
-  BGselector.size(90, 20);
+  BGselector.position(10, 10);
   BGselector.option("mandrill");
   BGselector.option("colormap");
   //Symbols image selector
   Symbolsselector = createSelect();
-  Symbolsselector.position(width - rightOffset + 10, 40);
-  Symbolsselector.size(90, 20);
+  Symbolsselector.position(90, 10);
   Symbolsselector.option("arial");
   Symbolsselector.option("erica-one");
-  //Input and Button to set Resolution
-  resInput = createInput("80");
-  resInput.position(width - rightOffset + 10, 70);
-  resInput.size(40, 20);
-  setResButton = createButton('set');
-  setResButton.position(width - rightOffset + 60, 70);
-  setResButton.size(40, 20);
-  setResButton.mousePressed(changeResolution);
-  debugButton = createButton('debug');
-  debugButton.position(width - rightOffset + 10, 100);
-  debugButton.size(80, 20);
-  lumaButton = createButton('luma');
-  lumaButton.position(width - rightOffset + 10, 130);
-  lumaButton.size(80, 20);
 
-  mosaicShader.setUniform("image",image);
+  mosaicShader.setUniform("image",vid);
   //Se carga la imagen con todas las texturas
   mosaicShader.setUniform('parts',gif.numFrames());
   mosaicShader.setUniform("symbols",mosaic);  
@@ -101,35 +84,10 @@ function setup() {
 
 function draw() {
   background(33);
+  mosaicShader.setUniform('image',vid);
   BGselector.changed(BGImageSelectEvent);
   Symbolsselector.changed(GIFImageSelectEvent);
-  debugButton.mousePressed(mosaicMode);
-  lumaButton.mousePressed(toggleLuma);
   cover(true);
-}
-
-function toggleLuma() {
-  if (luma) {
-    lumaButton.html('avg');
-  } else {
-    lumaButton.html('luma');
-  }
-  lumaMode();
-}
-
-function mosaicMode(){
-  debug = !debug;
-  mosaicShader.setUniform("debug",debug);
-}
-
-function lumaMode(){
-  luma = !luma;
-  mosaicShader.setUniform("luma",luma);
-}
-
-function changeResolution(){
-  const newRes = parseInt(resInput.value());
-  mosaicShader.setUniform("resolution", newRes);
 }
 
 function BGImageSelectEvent() {
@@ -150,17 +108,18 @@ function GIFImageSelectEvent() {
   redraw();
 }
 
+
 function cover(texture = false){
   beginShape();
   if(texture){
     vertex(-width / 2, -height /2, 0, 0, 0);
-    vertex( width / 2 - rightOffset, -height /2, 0, 1, 0);
-    vertex( width / 2 - rightOffset, height /2, 0, 1, 1);
+    vertex( width / 2, -height /2, 0, 1, 0);
+    vertex( width / 2, height /2, 0, 1, 1);
     vertex( -width / 2, height /2, 0, 0, 1);
   } else {
     vertex(-width / 2, -height /2, 0);
-    vertex( width / 2 - rightOffset, -height /2, 0);
-    vertex( width / 2 - rightOffset, height /2, 0);
+    vertex( width / 2, -height /2, 0);
+    vertex( width / 2, height /2, 0);
     vertex( -width / 2, height /2, 0);
   }
   endShape(CLOSE);
@@ -168,9 +127,11 @@ function cover(texture = false){
 
 function keyPressed(){
   if(key === "d"){
-    mosaicMode();
+    debug = !debug;
+    mosaicShader.setUniform("debug",debug);
   }
   if(key === "g"){
-    lumaMode();
+    luma = !luma;
+    mosaicShader.setUniform("luma",luma);
   }
 }
