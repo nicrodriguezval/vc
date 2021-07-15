@@ -38,6 +38,16 @@ var JSONshrek;
 var JSONpaintings;
 var JSONlandscapes;
 var JSONbeeMovie;
+//Buttons and Inputs
+var resInput;
+var setResButton;
+var debugButton;
+var lumaButton;
+var fpsButton;
+var fpsInput;
+var setFpsButton;
+//Offset
+let rightOffset = 100;
 
 function preload(){
   image = loadImage("/vc/docs/sketches/hardware/mosaic/images/mandrill.png");
@@ -86,27 +96,53 @@ function setup() {
     rgbArray.push(rgbArrayObj[e]);
   }
   //console.log("rgbArray",rgbArray);
-  createCanvas(600,600, WEBGL);
+  createCanvas(600 + rightOffset,600, WEBGL);
   textureMode(NORMAL);
   noStroke();
   shader(mosaicShader);
   
   vid = createVideo(["/vc/docs/sketches/fingers.mov", "/vc/docs/sketches/fingers.webm"]);
-  vid.loop();
+  vid.stop();
   vid.hide();
 
   //Background image selector
   BGselector = createSelect();
-  BGselector.position(10, 10);
+  BGselector.position(width - rightOffset + 10, 10);
+  BGselector.size(90, 20);
   BGselector.option("mandrill");
   BGselector.option("colormap");
   //Symbols image selector
   Symbolsselector = createSelect();
-  Symbolsselector.position(90, 10);
+  Symbolsselector.position(width - rightOffset + 10, 40);
+  Symbolsselector.size(90, 20);
   Symbolsselector.option("shrek");
   Symbolsselector.option("paintings");
   Symbolsselector.option("landscapes");
   Symbolsselector.option("bee-movie");
+  //Input and Button to set Resolution
+  resInput = createInput("80");
+  resInput.position(width - rightOffset + 10, 70);
+  resInput.size(40, 20);
+  setResButton = createButton('set');
+  setResButton.position(width - rightOffset + 60, 70);
+  setResButton.size(40, 20);
+  setResButton.mousePressed(changeResolution);
+  debugButton = createButton('debug');
+  debugButton.position(width - rightOffset + 10, 100);
+  debugButton.size(80, 20);
+  lumaButton = createButton('luma');
+  lumaButton.position(width - rightOffset + 10, 130);
+  lumaButton.size(80, 20);
+  frameRate(120);
+  fpsInput = createInput("120");
+  fpsInput.position(width - rightOffset + 10, 160);
+  fpsInput.size(40, 20);
+  setFpsButton = createButton('fps');
+  setFpsButton.position(width - rightOffset + 60, 160);
+  setFpsButton.size(40, 20);
+  fpsButton = createButton('fps');
+  fpsButton.position(width - rightOffset + 10, 190);
+  fpsButton.size(80, 20);
   
   mosaicShader.setUniform('parts', gif.numFrames());
 
@@ -126,14 +162,72 @@ function setup() {
   mosaicShader.setUniform('luma',luma);
 }
 
-
-
 function draw() {
   background(33);
   mosaicShader.setUniform('image',vid);
   BGselector.changed(BGImageSelectEvent);
   Symbolsselector.changed(GIFImageSelectEvent);
+  debugButton.mousePressed(mosaicMode);
+  lumaButton.mousePressed(toggleLuma);
+  setFpsButton.mousePressed(changeFPS);
+  updateFPS();
   cover(true);
+}
+
+function changeFPS(){
+  frameRate(fpsInput.value());
+}
+
+let savedMillis = 1000;
+let savedFPS = 0;
+function updateFPS(){
+  let decimalMillis = millis() % 1000;
+  let fps = 0;
+  if(decimalMillis < savedMillis){
+    savedMillis = decimalMillis;
+    fps = savedFPS + frameCount;
+    fpsButton.html(fps);
+    savedFPS = -frameCount;
+  } else {
+    savedMillis = decimalMillis;
+  }
+  
+}
+
+function toggleLuma() {
+  if (luma) {
+    lumaButton.html('avg');
+  } else {
+    lumaButton.html('luma');
+  }
+  lumaMode();
+}
+
+function mosaicMode(){
+  debug = !debug;
+  mosaicShader.setUniform("debug",debug);
+}
+
+function lumaMode(){
+  luma = !luma;
+  mosaicShader.setUniform("luma",luma);
+}
+
+
+function changeResolution(){
+  const newRes = parseInt(resInput.value());
+  mosaicShader.setUniform("resolution", newRes);
+}
+
+let isPlaying = false;
+function doubleClicked(){
+  if(isPlaying){
+    isPlaying = !isPlaying
+    vid.stop();
+  } else {
+    isPlaying = !isPlaying
+    vid.loop();
+  }
 }
 
 function BGImageSelectEvent() {
@@ -164,25 +258,23 @@ function cover(texture = false){
   beginShape();
   if(texture){
     vertex(-width / 2, -height /2, 0, 0, 0);
-    vertex( width / 2, -height /2, 0, 1, 0);
-    vertex( width / 2, height /2, 0, 1, 1);
+    vertex( width / 2 - rightOffset, -height /2, 0, 1, 0);
+    vertex( width / 2 - rightOffset, height /2, 0, 1, 1);
     vertex( -width / 2, height /2, 0, 0, 1);
   } else {
     vertex(-width / 2, -height /2, 0);
-    vertex( width / 2, -height /2, 0);
-    vertex( width / 2, height /2, 0);
+    vertex( width / 2 - rightOffset, -height /2, 0);
+    vertex( width / 2 - rightOffset, height /2, 0);
     vertex( -width / 2, height /2, 0);
   }
   endShape(CLOSE);
 }
 
 function keyPressed(){
-  if(key === 'd'){
-    debug = !debug;
-    mosaicShader.setUniform('debug',debug);
+  if(key === "d"){
+    mosaicMode();
   }
-  if(key === 'g'){
-    luma = !luma;
-    mosaicShader.setUniform('luma',luma);
+  if(key === "g"){
+    lumaMode();
   }
 }
