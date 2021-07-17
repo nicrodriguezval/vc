@@ -17,8 +17,18 @@
 > > >
 > > >[Grayscale](/docs/workshops/imaging/hardware/grayscale)
 > > >[Kernels](/docs/workshops/imaging/hardware/kernels)
-> > >[Ascii Art](/docs/workshops/imaging/hardware/ascii)
-> > >[Mosaic](/docs/workshops/imaging/hardware/mosaic)
+> > > > :Collapse label=Ascii Art
+> > > >
+> > > >[Image Ascii Art](/docs/workshops/imaging/hardware/ascii/image-ascii)
+> > > >[Video Ascii Art](/docs/workshops/imaging/hardware/ascii/video-ascii)
+> > >
+> > > > :Collapse label=Mosaic
+> > > >
+> > > >[RGB Dist. Image Mosaic](/docs/workshops/imaging/hardware/mosaic/rgb-image-mosaic)
+> > > >[RGB Dist. Video Mosaic](/docs/workshops/imaging/hardware/mosaic/rgb-video-mosaic)
+> > > >[Hue+Luma Image Mosaic](/docs/workshops/imaging/hardware/mosaic/hue-image-mosaic)
+> > > >[Hue+Luma Video Mosaic](/docs/workshops/imaging/hardware/mosaic/hue-video-mosaic)
+> > >
 >
 > [Rendering](/docs/workshops/rendering)
 > [Algovis](/docs/workshops/algovis)

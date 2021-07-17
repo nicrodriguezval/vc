@@ -38,6 +38,9 @@ We represented Lenna's photo using this technique.
 Resolution given by the sketch:
 
 > :Tabs
+> > :Tab title=Instructions
+> > > To execute the sketch, switch to tab "sketch".
+>
 > > :Tab title=sketch
 > >
 > > > :P5 sketch=/docs/sketches/hardware/asciimosaic/w2_asciimosaic.js, width=700, height=600
@@ -182,6 +185,9 @@ Resolution given by the sketch:
 Double-click for play/pause the video:
 
 > :Tabs
+> > :Tab title=Instructions
+> > > To execute the sketch, switch to tab "sketch".
+>
 > > :Tab title=sketch
 > >
 > > > :P5 sketch=/docs/sketches/hardware/asciimosaic/w2_asciivideo.js, width=700, height=600

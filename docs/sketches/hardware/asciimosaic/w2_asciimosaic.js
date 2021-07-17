@@ -1,14 +1,11 @@
 let gif;
+let vid;
 let mosaic;
-let cntImages = 0;
-let bright;
 var mosaicShader;
 var image;
-var symbol1, symbol2, symbols;
 var debug;
 var luma;
-var maxWidePixels = 15500 ; //Limite de ancho del mosaico. Depende de la GPU
-var speedAlg = 1; //Velocidad del algoritmo que saca el promedio de RGB
+var initialFPS = 120; //FPS iniciales del sketch
 var resolution = 80; //cantidad de cuadros
 let BGoption= new Map();
 let BGselector;
@@ -24,11 +21,18 @@ let GIFoption = new Map();
 //Preloads all images that are options in the selector
 var GIFarial;
 var GIFericaOne;
+//Fonts
 //Buttons and Inputs
 var resInput;
+var numTexDiv;
 var setResButton;
 var debugButton;
 var lumaButton;
+var fpsButton;
+var fpsDiv;
+var avgfpsDiv;
+var fpsInput;
+var setFpsButton;
 //Offset
 let rightOffset = 100;
 
@@ -60,32 +64,8 @@ function setup() {
   textureMode(NORMAL);
   noStroke();
   shader(mosaicShader);
-  //Background image selector
-  BGselector = createSelect();
-  BGselector.position(width - rightOffset + 10, 10);
-  BGselector.size(90, 20);
-  BGselector.option("mandrill");
-  BGselector.option("colormap");
-  //Symbols image selector
-  Symbolsselector = createSelect();
-  Symbolsselector.position(width - rightOffset + 10, 40);
-  Symbolsselector.size(90, 20);
-  Symbolsselector.option("arial");
-  Symbolsselector.option("erica-one");
-  //Input and Button to set Resolution
-  resInput = createInput("80");
-  resInput.position(width - rightOffset + 10, 70);
-  resInput.size(40, 20);
-  setResButton = createButton('set');
-  setResButton.position(width - rightOffset + 60, 70);
-  setResButton.size(40, 20);
-  setResButton.mousePressed(changeResolution);
-  debugButton = createButton('debug');
-  debugButton.position(width - rightOffset + 10, 100);
-  debugButton.size(80, 20);
-  lumaButton = createButton('luma');
-  lumaButton.position(width - rightOffset + 10, 130);
-  lumaButton.size(80, 20);
+  
+  rightMenu();
 
   mosaicShader.setUniform("image",image);
   //Se carga la imagen con todas las texturas
@@ -105,7 +85,135 @@ function draw() {
   Symbolsselector.changed(GIFImageSelectEvent);
   debugButton.mousePressed(mosaicMode);
   lumaButton.mousePressed(toggleLuma);
+  setFpsButton.mousePressed(changeFPS);
+  updateFPS();
+  updateNumTextures();
   cover(true);
+}
+
+function updateNumTextures(){
+  numTexDiv.html(gif.numFrames());
+}
+
+function rightMenu(){
+  //Background image selector
+  let ySpace = 0;
+  let vidSetText = createP("Images Set");
+  setText(vidSetText,90,20,width - rightOffset + 10,ySpace,'white',14);
+  ySpace += 30;
+  BGselector = createSelect();
+  BGselector.position(width - rightOffset + 10, ySpace);
+  BGselector.size(90, 20);
+  BGselector.size(90, 20);
+  BGselector.option("mandrill");
+  BGselector.option("colormap");
+  ySpace += 10;
+  let fontSetText = createP("Fonts Set");
+  setText(fontSetText,90,20,width - rightOffset + 10,ySpace,'white',14);
+  ySpace += 30;
+  //Symbols image selector
+  Symbolsselector = createSelect();
+  Symbolsselector.position(width - rightOffset + 10, ySpace);
+  Symbolsselector.size(90, 20);
+  Symbolsselector.option("arial");
+  Symbolsselector.option("erica-one");
+  ySpace += 10;
+  let numTexText = createP("Num. Textures:");
+  setText(numTexText,100,20,width - rightOffset+7,ySpace,'white',12);
+  ySpace += 30;
+  numTexDiv = createDiv(gif.numFrames());
+  setDiv(numTexDiv,40,20,width - rightOffset + 35,ySpace,'white',20,0,2);
+  ySpace += 30;
+  //Input and Button to set Resolution
+  resInput = createInput("80");
+  resInput.position(width - rightOffset + 10, ySpace);
+  resInput.size(40, 20);
+  setResButton = createButton('set');
+  setResButton.position(width - rightOffset + 60, ySpace);
+  setResButton.size(40, 25);
+  ySpace += 30;
+  setResButton.mousePressed(changeResolution);
+  //Debug and Luma Buttons
+  debugButton = createButton('debug');
+  debugButton.position(width - rightOffset + 17, ySpace);
+  debugButton.size(80, 25);
+  ySpace += 30;
+  lumaButton = createButton('luma');
+  lumaButton.position(width - rightOffset + 17, ySpace);
+  lumaButton.size(80, 25);
+  ySpace += 30;
+  frameRate(initialFPS);
+  fpsInput = createInput(initialFPS);
+  fpsInput.position(width - rightOffset + 10, ySpace);
+  fpsInput.size(40, 20);
+  setFpsButton = createButton('fps');
+  setFpsButton.position(width - rightOffset + 60, ySpace);
+  setFpsButton.size(40, 25);
+  ySpace += 10;
+  let fpsText = createP("FPS");
+  setText(fpsText,75,20,width - rightOffset + 20,ySpace,'white',24);
+  ySpace += 50;
+  fpsDiv = createDiv(0);
+  setDiv(fpsDiv,50,50,width - rightOffset + 25,ySpace,'white',30,15,15);
+  ySpace += 60;
+  let avgfpsText = createP("AVG FPS");
+  setText(avgfpsText,77,20,width - rightOffset + 20,ySpace,'white',14);
+  ySpace += 30;
+  avgfpsDiv = createDiv(0);
+  setDiv(avgfpsDiv,60,30,width - rightOffset + 25,ySpace,'white',20,8,8);
+}
+
+function setDiv(divElem,sizeX,sizeY,x,y,BGcolor,Fontsize,padTop,padLeft){
+  divElem.position(x, y);
+  divElem.style('background-color', BGcolor);
+  divElem.style('font-family', 'Helvetica');
+  divElem.style('padding-top', padTop + 'px');
+  divElem.style('padding-left', padLeft + 'px');
+  divElem.style('font-size',Fontsize + 'px');
+  divElem.size(sizeX, sizeY);
+}
+
+function setText(textElem,sizeX,sizeY,x,y,color,size){
+  textElem.size(sizeX, sizeY);
+  textElem.position(x, y);
+  textElem.style('color', color);
+  textElem.style('text-align', 'center');
+  textElem.style('font-family', 'Helvetica');
+  textElem.style('font-size', size + 'px');
+}
+
+function changeFPS(){
+  console.log("fpsInput.value(): "+fpsInput.value())
+  frameRate(int(fpsInput.value()));
+}
+
+let savedMillis = 1000;
+let savedFPS = 0;
+function updateFPS(){
+  let decimalMillis = millis() % 1000;
+  let fps = 0;
+  if(decimalMillis < savedMillis){
+    updateAvgFPS();
+    savedMillis = decimalMillis;
+    fps = savedFPS + frameCount;
+    fpsDiv.html(fps);
+    if(fps <= 15){
+      fpsDiv.style('color', '#FF0000');
+    } else{
+      fpsDiv.style('color', '#000000');
+      
+    }
+    savedFPS = -frameCount;
+  } else {
+    savedMillis = decimalMillis;
+  }
+  
+}
+
+function updateAvgFPS(){
+  let s = millis() / 1000;
+  let avg = Math.round((frameCount / s)*100)/100;
+  avgfpsDiv.html(avg);
 }
 
 function toggleLuma() {
