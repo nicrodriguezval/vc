@@ -2,15 +2,13 @@
 
 # Problem statement
 
-## Propósito
-
-Introducir el análisis de imágenes al implementar las siguientes operaciones de análisis para imágenes:
-
-## Tareas
-
-* Conversión de la imagen a _ascii art_.
+Using specialized hardware like an integrated or dedicated GPU, implement a sketch that converts a sample image into a grid composed of a set of characters. 
 
 # Background
+
+## Spatial Coherence
+
+## Grayscale (Average / Luma) Proximity
 
 ## ASCII art
 
@@ -30,8 +28,6 @@ ASCII art is a technique that represents an image into characters of the ASCII s
 >
 >   frameRate(1);
 > }
-
-We represented Lenna's photo using this technique.
 
 # Implementation
 
