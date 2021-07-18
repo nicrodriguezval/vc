@@ -9,28 +9,11 @@ var initialFPS = 120; //FPS iniciales del sketch
 var resolution = 80; //cantidad de cuadros
 let BGoption= new Map();
 let BGselector;
-//Preloads all videos that are options in the selector
-var fingersVideo;
 var rgbArrayObj;
 let Symbolsoption = new Map();
 let Symbolsselector;
-//Preloads all images that are options in the selector
-var shrekImage;
-var paintingsImage;
-var landscapesImage;
-var beeMovieImage;
 let GIFoption = new Map();
-//Preloads all images that are options in the selector
-var GIFshrek;
-var GIFpaintings;
-var GIFlandscapes;
-var GIFbeeMovie;
 let JSONoption = new Map();
-//Preloads all images that are options in the selector
-var JSONshrek;
-var JSONpaintings;
-var JSONlandscapes;
-var JSONbeeMovie;
 //Fonts
 //Buttons and Inputs
 var playButton;
@@ -48,37 +31,22 @@ let rightOffset = 100;
 
 function preload(){
   //Images: images/colormap.png, images/mandrill.png
-  shrekImage = loadImage("/vc/docs/sketches/hardware/mosaic/gifs/generated/shrek.png");
-  paintingsImage = loadImage("/vc/docs/sketches/hardware/mosaic/gifs/generated/paintings.png");
-  landscapesImage = loadImage("/vc/docs/sketches/hardware/mosaic/gifs/generated/landscapes.png");
-  beeMovieImage = loadImage("/vc/docs/sketches/hardware/mosaic/gifs/generated/bee-movie.png");
-  Symbolsoption.set("shrek",shrekImage);
-  Symbolsoption.set("paintings",paintingsImage);
-  Symbolsoption.set("landscapes",landscapesImage);
-  Symbolsoption.set("bee-movie",beeMovieImage);
-  GIFshrek = loadImage('/vc/docs/sketches/hardware/mosaic/gifs/shrek.gif');
-  GIFpaintings = loadImage('/vc/docs/sketches/hardware/mosaic/gifs/paintings.gif');
-  GIFlandscapes = loadImage('/vc/docs/sketches/hardware/mosaic/gifs/landscapes.gif');
-  GIFbeeMovie = loadImage('/vc/docs/sketches/hardware/mosaic/gifs/bee-movie.gif');
-  GIFoption.set("shrek",GIFshrek);
-  GIFoption.set("paintings",GIFpaintings);
-  GIFoption.set("landscapes",GIFlandscapes);
-  GIFoption.set("bee-movie",GIFbeeMovie);
-  JSONshrek = loadJSON('/vc/docs/sketches/hardware/mosaic/gifs/generated/shrek.json');
-  JSONpaintings = loadJSON('/vc/docs/sketches/hardware/mosaic/gifs/generated/paintings.json');
-  JSONlandscapes = loadJSON('/vc/docs/sketches/hardware/mosaic/gifs/generated/landscapes.json');
-  JSONbeeMovie = loadJSON('/vc/docs/sketches/hardware/mosaic/gifs/generated/bee-movie.json');
-  JSONoption.set("shrek",JSONshrek);
-  JSONoption.set("paintings",JSONpaintings);
-  JSONoption.set("landscapes",JSONlandscapes);
-  JSONoption.set("bee-movie",JSONbeeMovie);
+  Symbolsselector = createSelect();
+  setSymbolsGIFAndJSON("spirited-away");
+  setSymbolsGIFAndJSON("terminator");
+  setSymbolsGIFAndJSON("wall-e");
+  setSymbolsGIFAndJSON("bee-movie");
+  setSymbolsGIFAndJSON("paintings36");
+  setSymbolsGIFAndJSON("paintings81");
+  setSymbolsGIFAndJSON("paintings128");
+  setSymbolsGIFAndJSON("paintings192");
+  setSymbolsGIFAndJSON("paintings288");
   //Default values at the beggining
-  image = loadImage('/vc/docs/sketches/hardware/mosaic/images/mandrill.png');
-  mosaicShader = loadShader('/vc/docs/sketches/hardware/mosaic/shader.vert','/vc/docs/sketches/hardware/mosaic/videomosaic.frag');
+  mosaicShader = loadShader('/vc/docs/sketches/hardware/mosaic/shader.vert','/vc/docs/sketches/hardware/mosaic/photomosaic.frag');
   //gifs: gifs/shrek.gif, gifs/paintings.gif, gifs/landscapes.gif, gifs/bee-movie.gif
-  gif = loadImage('/vc/docs/sketches/hardware/mosaic/gifs/shrek.gif');
-  rgbArrayObj = loadJSON('/vc/docs/sketches/hardware/mosaic/gifs/generated/shrek.json');
-  mosaic = loadImage('/vc/docs/sketches/hardware/mosaic/gifs/generated/shrek.png');
+  gif = loadImage('/vc/docs/sketches/hardware/mosaic/gifs/spirited-away.gif');
+  rgbArrayObj = loadJSON('/vc/docs/sketches/hardware/mosaic/gifs/generated/spirited-away.json');
+  mosaic = loadImage('/vc/docs/sketches/hardware/mosaic/gifs/generated/spirited-away.png');
   //console.log("rgbArrayObj",rgbArrayObj);
   
 }
@@ -92,9 +60,9 @@ function setup() {
   textureMode(NORMAL);
   noStroke();
   shader(mosaicShader);
-  fingersVideo = createVideo(["/vc/docs/sketches/fingers.mov", "/vc/docs/sketches/fingers.webm"]);
-  fingersVideo.hide();
-  BGoption.set("fingers",fingersVideo);
+  BGselector = createSelect();
+  setBGVideo("fingers");
+  setBGVideo("soccer");
   //Default
   vid = createVideo(["/vc/docs/sketches/fingers.mov", "/vc/docs/sketches/fingers.webm"]);
   vid.stop();
@@ -133,6 +101,23 @@ function draw() {
   cover(true);
 }
 
+function setBGVideo(name){
+  var video = createVideo(["/vc/docs/sketches/"+name+".mov","/vc/docs/sketches/"+name+".webm"]);
+  video.hide();
+  BGoption.set(name,video);
+  BGselector.option(name);
+}
+
+function setSymbolsGIFAndJSON(name){
+  var imag = loadImage("/vc/docs/sketches/hardware/mosaic/gifs/generated/"+name+".png");
+  Symbolsoption.set(name,imag);
+  Symbolsselector.option(name);
+  var GIFvar = loadImage("/vc/docs/sketches/hardware/mosaic/gifs/"+name+".gif");
+  GIFoption.set(name,GIFvar);
+  var JSONvar = loadJSON("/vc/docs/sketches/hardware/mosaic/gifs/generated/"+name+".json");
+  JSONoption.set(name,JSONvar);
+}
+
 let isPlaying = false;
 function playPauseVideo(){
   if(isPlaying){
@@ -160,23 +145,15 @@ function rightMenu(){
   let vidSetText = createP("Videos Set");
   setText(vidSetText,90,20,width - rightOffset + 10,ySpace,'white',14);
   ySpace += 30;
-  BGselector = createSelect();
   BGselector.position(width - rightOffset + 10, ySpace);
   BGselector.size(90, 20);
-  BGselector.size(90, 20);
-  BGselector.option("fingers");
   ySpace += 10;
   let fontSetText = createP("Sources Set");
   setText(fontSetText,90,20,width - rightOffset + 10,ySpace,'white',14);
   ySpace += 30;
   //Symbols image selector
-  Symbolsselector = createSelect();
   Symbolsselector.position(width - rightOffset + 10, ySpace);
   Symbolsselector.size(90, 20);
-  Symbolsselector.option("shrek");
-  Symbolsselector.option("paintings");
-  Symbolsselector.option("landscapes");
-  Symbolsselector.option("bee-movie");
   ySpace += 10;
   let numTexText = createP("Num. Textures:");
   setText(numTexText,100,20,width - rightOffset+7,ySpace,'white',12);
@@ -286,8 +263,9 @@ function BGVideoSelectEvent() {
   let nameVideo = BGselector.value();
   vid = BGoption.get(nameVideo);
   mosaicShader.setUniform("image",vid);
-  // console.log(kernel);
-  redraw();
+  if(isPlaying){
+    playPauseVideo();
+  }
 }
 
 function GIFImageSelectEvent() {

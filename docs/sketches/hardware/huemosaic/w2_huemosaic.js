@@ -34,10 +34,14 @@ let rightOffset = 100;
 function preload(){
   //Images: images/colormap.png, images/mandrill.png
   //Images: images/colormap.png, images/mandrill.png
-  var mandrillImage = loadImage("/vc/docs/sketches/hardware/huemosaic/images/mandrill.png");
-  var colormapImage = loadImage("/vc/docs/sketches/hardware/huemosaic/images/colormap.png");
-  BGoption.set("mandrill",mandrillImage);
-  BGoption.set("colormap",colormapImage);
+  BGselector = createSelect();
+  setBGImage("mandrill");
+  setBGImage("monarch");
+  setBGImage("lichtenstein");
+  setBGImage("ara_macao");
+  setBGImage("colormap");
+
+  Symbolsselector = createSelect();
   addGridsToSymbols("paintings");
   addGridsToSymbols("spirited-away");
   addGridsToSymbols("terminator");
@@ -85,6 +89,12 @@ function draw() {
   cover(true);
 }
 
+function setBGImage(name){
+  var imag = loadImage("/vc/docs/sketches/hardware/huemosaic/images/"+name+".png");
+  BGoption.set(name,imag);
+  BGselector.option(name);
+}
+
 function addGridsToSymbols(strName){
   var img6x6 = loadImage("/vc/docs/sketches/hardware/huemosaic/mosaics/"+strName+"6x6.jpg");
   var img9x9 = loadImage("/vc/docs/sketches/hardware/huemosaic/mosaics/"+strName+"9x9.jpg");
@@ -102,6 +112,7 @@ function addGridsToSymbols(strName){
   Symbolsoption.set(strName+"24x08",img24x8);
   Symbolsoption.set(strName+"12x24",img12x24);
   Symbolsoption.set(strName+"24x12",img24x12);
+  Symbolsselector.option(strName);
 }
 
 function updateNumTextures(){
@@ -114,12 +125,8 @@ function rightMenu(){
   let vidSetText = createP("Images Set");
   setText(vidSetText,90,20,width - rightOffset + 10,ySpace,'white',14);
   ySpace += 30;
-  BGselector = createSelect();
   BGselector.position(width - rightOffset + 10, ySpace);
   BGselector.size(90, 20);
-  BGselector.size(90, 20);
-  BGselector.option("mandrill");
-  BGselector.option("colormap");
   ySpace += 10;
   let gridSizeText = createP("Grid Size");
   setText(gridSizeText,90,20,width - rightOffset + 10,ySpace,'white',14);
@@ -140,14 +147,8 @@ function rightMenu(){
   let srcSetText = createP("Sources Set");
   setText(srcSetText,90,20,width - rightOffset + 10,ySpace,'white',14);
   ySpace += 30;
-  Symbolsselector = createSelect();
   Symbolsselector.position(width - rightOffset + 10, ySpace);
   Symbolsselector.size(90, 20);
-  Symbolsselector.option("paintings");
-  Symbolsselector.option("spirited-away");
-  Symbolsselector.option("terminator");
-  Symbolsselector.option("wall-e");
-  Symbolsselector.option("bee-movie");
   ySpace += 10;
   let numTexText = createP("Num. Textures:");
   setText(numTexText,100,20,width - rightOffset+7,ySpace,'white',12);

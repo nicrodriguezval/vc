@@ -9,21 +9,15 @@ var initialFPS = 120; //FPS iniciales del sketch
 var resolution = 80; //cantidad de cuadros
 let BGoption= new Map();
 let BGselector;
-//Preloads all images that are options in the selector
-var fingersVideo;
 let Symbolsoption = new Map();
 let Symbolsselector;
-//Preloads all images that are options in the selector
-var arialImage;
-var ericaOneImage;
 let GIFoption = new Map();
-//Preloads all images that are options in the selector
-var GIFarial;
-var GIFericaOne;
-//Fonts
+//Video
+let isPlaying = false;
 //Buttons and Inputs
 var playButton;
 var resInput;
+var numTexDiv;
 var setResButton;
 var debugButton;
 var lumaButton;
@@ -37,19 +31,21 @@ let rightOffset = 100;
 
 function preload(){
   // gifs/arial.gif, gifs/erica-one.gif
-  arialImage = loadImage("/vc/docs/sketches/hardware/asciimosaic/gifs/generated/arial.png");
-  ericaOneImage = loadImage("/vc/docs/sketches/hardware/asciimosaic/gifs/generated/erica-one.png");
-  Symbolsoption.set("arial",arialImage);
-  Symbolsoption.set("erica-one",ericaOneImage);
-  GIFarial = loadImage("/vc/docs/sketches/hardware/asciimosaic/gifs/arial.gif");
-  GIFericaOne = loadImage("/vc/docs/sketches/hardware/asciimosaic/gifs/erica-one.gif");
-  GIFoption.set("arial",GIFarial);
-  GIFoption.set("erica-one",GIFericaOne);
+  Symbolsselector = createSelect();
+  setSymbolsAndGIF("religions");
+  setSymbolsAndGIF("chess");
+  setSymbolsAndGIF("arial+erica");
+  setSymbolsAndGIF("arial");
+  setSymbolsAndGIF("erica-one");
+  setSymbolsAndGIF("helvetica");
+  setSymbolsAndGIF("comic-sans"); 
+  setSymbolsAndGIF("all-fonts"); 
+  setSymbolsAndGIF("all-images");  
   
   //Default values at the beggining
   mosaicShader = loadShader("/vc/docs/sketches/hardware/asciimosaic/shader.vert","/vc/docs/sketches/hardware/asciimosaic/asciimosaic.frag");
-  mosaic = loadImage("/vc/docs/sketches/hardware/asciimosaic/gifs/generated/arial.png");
-  gif = loadImage("/vc/docs/sketches/hardware/asciimosaic/gifs/arial.gif");
+  mosaic = loadImage("/vc/docs/sketches/hardware/asciimosaic/gifs/generated/religions.png");
+  gif = loadImage("/vc/docs/sketches/hardware/asciimosaic/gifs/religions.gif");
 }
 
 function setup() {
@@ -57,11 +53,12 @@ function setup() {
   textureMode(NORMAL);
   noStroke();
   shader(mosaicShader);
-  fingersVideo = createVideo(["/vc/docs/sketches/fingers.mov", "/vc/docs/sketches/fingers.webm"]);
-  fingersVideo.hide();
-  BGoption.set("fingers",fingersVideo);
+  //fingersVideo = createVideo(["/vc/docs/sketches/fingers.mov", "/vc/docs/sketches/soccer.webm"]);
+  BGselector = createSelect();
+  setBGVideo("fingers");
+  setBGVideo("soccer");
   //Default
-  vid = createVideo(["/vc/docs/sketches/fingers.mov", "/vc/docs/sketches/fingers.webm"]);
+  vid = createVideo(["/vc/docs/sketches/fingers.mov","/vc/docs/sketches/fingers.webm"]);
   vid.stop();
   vid.hide();
 
@@ -89,7 +86,27 @@ function draw() {
   setFpsButton.mousePressed(changeFPS);
   playButton.mousePressed(playPauseVideo);
   updateFPS();
+  updateNumTextures();
   cover(true);
+}
+
+function setBGVideo(name){
+  var video = createVideo(["/vc/docs/sketches/"+name+".mov","/vc/docs/sketches/"+name+".webm"]);
+  video.hide();
+  BGoption.set(name,video);
+  BGselector.option(name);
+}
+
+function setSymbolsAndGIF(name){
+  var imag = loadImage("/vc/docs/sketches/hardware/asciimosaic/gifs/generated/"+name+".png");
+  Symbolsoption.set(name,imag);
+  Symbolsselector.option(name);
+  var gifImg = loadImage("/vc/docs/sketches/hardware/asciimosaic/gifs/"+name+".gif");
+  GIFoption.set(name,gifImg);
+}
+
+function updateNumTextures(){
+  numTexDiv.html(gif.numFrames());
 }
 
 function rightMenu(){
@@ -102,29 +119,25 @@ function rightMenu(){
   let vidSetText = createP("Videos Set");
   setText(vidSetText,90,20,width - rightOffset + 10,ySpace,'white',14);
   ySpace += 30;
-  BGselector = createSelect();
   BGselector.position(width - rightOffset + 10, ySpace);
   BGselector.size(90, 20);
-  BGselector.option("fingers");
   ySpace += 10;
   let fontSetText = createP("Fonts Set");
   setText(fontSetText,90,20,width - rightOffset + 10,ySpace,'white',14);
   ySpace += 30;
   //Symbols image selector
-  Symbolsselector = createSelect();
   Symbolsselector.position(width - rightOffset + 10, ySpace);
   Symbolsselector.size(90, 20);
-  Symbolsselector.option("arial");
-  Symbolsselector.option("erica-one");
+
   ySpace += 10;
   let numTexText = createP("Num. Textures:");
   setText(numTexText,100,20,width - rightOffset+7,ySpace,'white',12);
   ySpace += 30;
-  let numTexDiv = createDiv(gif.numFrames());
+  numTexDiv = createDiv(gif.numFrames());
   setDiv(numTexDiv,40,20,width - rightOffset + 35,ySpace,'white',20,0,2);
   ySpace += 30;
   //Input and Button to set Resolution
-  resInput = createInput("80");
+  resInput = createInput(resolution);
   resInput.position(width - rightOffset + 10, ySpace);
   resInput.size(40, 20);
   setResButton = createButton('set');
@@ -239,7 +252,7 @@ function changeResolution(){
   mosaicShader.setUniform("resolution", newRes);
 }
 
-let isPlaying = false;
+
 function playPauseVideo(){
   if(isPlaying){
     isPlaying = !isPlaying
@@ -256,8 +269,9 @@ function BGVideoSelectEvent() {
   let nameVideo = BGselector.value();
   vid = BGoption.get(nameVideo);
   mosaicShader.setUniform("image",vid);
-  // console.log(kernel);
-  redraw();
+  if(isPlaying){
+    playPauseVideo();
+  }
 }
 
 function GIFImageSelectEvent() {
