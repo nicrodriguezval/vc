@@ -36,10 +36,7 @@ let rightOffset = 100;
 function preload(){
   //Images: images/colormap.png, images/mandrill.png
   //Images: images/colormap.png, images/mandrill.png
-  var mandrillImage = loadImage("/vc/docs/sketches/hardware/huemosaic/images/mandrill.png");
-  var colormapImage = loadImage("/vc/docs/sketches/hardware/huemosaic/images/colormap.png");
-  BGoption.set("mandrill",mandrillImage);
-  BGoption.set("colormap",colormapImage);
+  Symbolsselector = createSelect();
   addGridsToSymbols("paintings");
   addGridsToSymbols("spirited-away");
   addGridsToSymbols("terminator");
@@ -57,9 +54,9 @@ function setup() {
   textureMode(NORMAL);
   noStroke();
   shader(mosaicShader);
-  fingersVideo = createVideo(["/vc/docs/sketches/fingers.mov", "/vc/docs/sketches/fingers.webm"]);
-  fingersVideo.hide();
-  BGoption.set("fingers",fingersVideo);
+  BGselector = createSelect();
+  setBGVideo("fingers");
+  setBGVideo("soccer");
   //Default
   vid = createVideo(["/vc/docs/sketches/fingers.mov", "/vc/docs/sketches/fingers.webm"]);
   vid.stop();
@@ -96,6 +93,13 @@ function draw() {
   cover(true);
 }
 
+function setBGVideo(name){
+  var video = createVideo(["/vc/docs/sketches/"+name+".mov","/vc/docs/sketches/"+name+".webm"]);
+  video.hide();
+  BGoption.set(name,video);
+  BGselector.option(name);
+}
+
 let isPlaying = false;
 function playPauseVideo(){
   if(isPlaying){
@@ -126,6 +130,7 @@ function addGridsToSymbols(strName){
   Symbolsoption.set(strName+"24x08",img24x8);
   Symbolsoption.set(strName+"12x24",img12x24);
   Symbolsoption.set(strName+"24x12",img24x12);
+  Symbolsselector.option(strName);
 }
 
 function updateNumTextures(){
@@ -142,11 +147,8 @@ function rightMenu(){
   let vidSetText = createP("Videos Set");
   setText(vidSetText,90,20,width - rightOffset + 10,ySpace,'white',14);
   ySpace += 30;
-  BGselector = createSelect();
   BGselector.position(width - rightOffset + 10, ySpace);
   BGselector.size(90, 20);
-  BGselector.size(90, 20);
-  BGselector.option("fingers");
   ySpace += 10;
   let gridSizeText = createP("Grid Size");
   setText(gridSizeText,90,20,width - rightOffset + 10,ySpace,'white',14);
@@ -167,14 +169,8 @@ function rightMenu(){
   let srcSetText = createP("Sources Set");
   setText(srcSetText,90,20,width - rightOffset + 10,ySpace,'white',14);
   ySpace += 30;
-  Symbolsselector = createSelect();
   Symbolsselector.position(width - rightOffset + 10, ySpace);
   Symbolsselector.size(90, 20);
-  Symbolsselector.option("paintings");
-  Symbolsselector.option("spirited-away");
-  Symbolsselector.option("terminator");
-  Symbolsselector.option("wall-e");
-  Symbolsselector.option("bee-movie");
   ySpace += 10;
   let numTexText = createP("Num. Textures:");
   setText(numTexText,100,20,width - rightOffset+7,ySpace,'white',12);
@@ -286,8 +282,9 @@ function BGVideoSelectEvent() {
   let nameVideo = BGselector.value();
   vid = BGoption.get(nameVideo);
   mosaicShader.setUniform("image",vid);
-  // console.log(kernel);
-  redraw();
+  if(isPlaying){
+    playPauseVideo();
+  }
 }
 
 function setNewResolution(){

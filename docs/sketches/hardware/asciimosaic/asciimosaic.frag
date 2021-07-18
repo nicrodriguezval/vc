@@ -1,5 +1,5 @@
 precision mediump float;
-
+#define MOSAIC_WIDTH 78.0
 // image is sent by the sketch
 uniform sampler2D image;
 //symbols texture is sent by the sketch
@@ -45,15 +45,20 @@ void main(){
 			//Average grayscale
 			gray = (index.x + index.y + index.z) / 3.0; //Computes the magnitude of the vector 
 		}
-			
-		for(int i = 0; i < 100000; i++){ //Loop to a very large number
-			if(i == parts) break;
-			float i_f = float(i);
-			if( (gray >= div * i_f) && (gray <= div * (i_f + 1.0))){ //If magnitude is inside a division of the texture symbols
-				//Divides the coords to only print one part of the image
-				//And after sums a vector that begin to print in the actual division
-				gl_FragColor = texture2D(symbols, (symbolCoord / vec2(parts_f,1.0)) + vec2(div*i_f,0.0) ) * vVertexColor;
-			}
-		} 
+			float partsY_f = ceil(parts_f / MOSAIC_WIDTH);
+			float dY = 1.0 / partsY_f;
+			for(int i = 0; i < 100000; i++){ //Loop to a very large number
+				if(i == parts) break;
+				float i_f = float(i);
+				float i_fMod = mod(i_f,MOSAIC_WIDTH);
+				float i_fY = floor(i_f / MOSAIC_WIDTH);
+				float minXDivs = min(parts_f, MOSAIC_WIDTH); 
+				float dX = 1.0 / minXDivs;
+				if( (gray >= div * i_f) && (gray < div * (i_f + 1.0))){ //If magnitude is inside a division of the texture symbols
+					//Divides the coords to only print one part of the image
+					//And after sums a vector that begin to print in the actual division
+					gl_FragColor = texture2D(symbols, (symbolCoord / vec2(minXDivs,partsY_f)) + vec2(dX*i_fMod,dY*i_fY) ) * vVertexColor;
+				}
+			}		
 	}
 }

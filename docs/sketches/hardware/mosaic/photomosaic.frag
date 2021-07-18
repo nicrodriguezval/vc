@@ -1,7 +1,7 @@
 precision mediump float;
-
+#define MOSAIC_WIDTH 78.0
 //Set a constant to max number of textures
-#define MAXTEXTURES 256
+#define MAXTEXTURES 288
 #define MAXTEXTURES_RGB MAXTEXTURES * 3
 
 // image is sent by the sketch
@@ -46,13 +46,20 @@ void main(){
 		vec3 values = index.xyz;
 		int minIndex = 15;
 		minIndex = minDistIndex(values);
+		float partsY_f = ceil(parts_f / MOSAIC_WIDTH);
+		float dY = 1.0 / partsY_f;
 		for(int i = 0; i < MAXTEXTURES; i++){ 
 			if(i == parts) break;
 			float i_f = float(i);
+			float i_fMod = mod(i_f,MOSAIC_WIDTH);
+			float i_fY = floor(i_f / MOSAIC_WIDTH);
+			float minXDivs = min(parts_f, MOSAIC_WIDTH); 
+			float dX = 1.0 / minXDivs;
 			if( minIndex == i ){ 
 				//Divides the coords to only print one part of the image
 				//And after sums a vector that begin to print in the actual division
-				gl_FragColor = texture2D(symbols, (symbolCoord / vec2(parts_f,1.0)) + vec2(div*i_f,0.0) ) * vVertexColor;
+				//gl_FragColor = texture2D(symbols, (symbolCoord / vec2(parts_f,1.0)) + vec2(div*i_f,0.0) ) * vVertexColor;
+				gl_FragColor = texture2D(symbols, (symbolCoord / vec2(minXDivs,partsY_f)) + vec2(dX*i_fMod,dY*i_fY) ) * vVertexColor;
 			}
 		}
 	}
