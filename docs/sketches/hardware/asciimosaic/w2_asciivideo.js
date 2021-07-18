@@ -26,6 +26,7 @@ var fpsDiv;
 var avgfpsDiv;
 var fpsInput;
 var setFpsButton;
+var secondsDiv;
 //Offset
 let rightOffset = 100;
 
@@ -173,6 +174,12 @@ function rightMenu(){
   ySpace += 30;
   avgfpsDiv = createDiv(0);
   setDiv(avgfpsDiv,60,30,width - rightOffset + 25,ySpace,'white',20,8,8);
+  ySpace += 30;
+  let secondsText = createP("Time (s)");
+  setText(secondsText,77,20,width - rightOffset + 20,ySpace,'white',14);
+  ySpace += 30;
+  secondsDiv = createDiv(0);
+  setDiv(secondsDiv,60,30,width - rightOffset + 25,ySpace,'white',20,8,8);
 }
 
 function setDiv(divElem,sizeX,sizeY,x,y,BGcolor,Fontsize,padTop,padLeft){
@@ -226,6 +233,7 @@ function updateAvgFPS(){
   let s = millis() / 1000;
   let avg = Math.round((frameCount / s)*100)/100;
   avgfpsDiv.html(avg);
+  secondsDiv.html(Math.floor(s));
 }
 
 function toggleLuma() {
