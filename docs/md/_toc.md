@@ -30,7 +30,11 @@
 > > > >[Hue+Luma Video Mosaic](/docs/workshops/imaging/hardware/mosaic/hue-video-mosaic)
 > > >
 >
-> [Rendering](/docs/workshops/rendering)
+> > :Collapse label=Rendering
+> >
+> > [Z-buffer](/docs/workshops/rendering/zBuffer)
+> > [Rasterization](/docs/workshops/rendering/rasterization)
+>
 > [Algovis](/docs/workshops/algovis)
 > [Computer Graphics](/docs/workshops/cg)
 > [HCI](/docs/workshops/hci)
