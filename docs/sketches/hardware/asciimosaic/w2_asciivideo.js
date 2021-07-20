@@ -244,8 +244,8 @@ function updateFPS(){
 }
 
 function updateAvgFPS(){
-  let s = millis() / 1000;
-  let avg = Math.round((frameCount / s)*100)/100;
+  let s = (millis() - resetTime) / 1000;
+  let avg = Math.round(((frameCount - resetFrame )/ s)*100)/100;
   avgfpsDiv.html(avg);
   secondsDiv.html(Math.floor(s));
 }
