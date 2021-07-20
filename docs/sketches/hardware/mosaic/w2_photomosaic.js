@@ -29,6 +29,10 @@ var avgfpsDiv;
 var fpsInput;
 var setFpsButton;
 var secondsDiv;
+//Reset 
+var resetButton;
+var resetTime = 0;
+var resetFrame = 0;
 //Offset
 let rightOffset = 100;
 
@@ -97,9 +101,15 @@ function draw() {
   Symbolsselector.changed(GIFImageSelectEvent);
   debugButton.mousePressed(mosaicMode);
   setFpsButton.mousePressed(changeFPS);
+  resetButton.mousePressed(resetSeconds);
   updateFPS();
   updateNumTextures();
   cover(true);
+}
+
+function resetSeconds(){
+  resetTime = millis();
+  resetFrame = frameCount;
 }
 
 function setBGImage(name){
@@ -184,6 +194,10 @@ function rightMenu(){
   ySpace += 30;
   secondsDiv = createDiv(0);
   setDiv(secondsDiv,60,30,width - rightOffset + 25,ySpace,'white',20,8,8);
+  ySpace += 50;
+  resetButton = createButton('reset');
+  resetButton.position(width - rightOffset + 17, ySpace);
+  resetButton.size(80, 25);
 }
 
 function setDiv(divElem,sizeX,sizeY,x,y,BGcolor,Fontsize,padTop,padLeft){
