@@ -1149,42 +1149,100 @@ body.dark code {
     color: #1eb2a6;
   }
 }
-  .tabs-0-0-18 .selector {
+  .formula-0-0-18 {
+    color: #757575;
+    padding: 16px;
+    background: #eeeeee;
+    border-radius: 3px;
+  }
+  body.dark .formula-0-0-18 {
+    color: #cacaca;
+    background: #282828;
+  }
+@media (prefers-color-scheme: dark) {
+  body:not(.dark-mode-animate) .formula-0-0-18 {
+    color: #cacaca;
+    background: #282828;
+  }
+}
+  body.dark-mode-animate .formula-0-0-18 {
+    transition: background .3s, color .3s;
+  }
+  .formula-0-0-18.big {
+    font-size: 32px;
+  }
+  .formula-0-0-18.center > div {
+    text-align: center;
+  }
+  .line-0-0-19 {
+    cursor: pointer;
+    padding: 16px 32px;
+    overflow: auto;
+    position: relative;
+    border-radius: 3px;
+  }
+  .line-0-0-19:hover {
+    background: #e8e8e8;
+  }
+  .line-0-0-19 .counter {
+    top: 0;
+    left: 8px;
+    width: 32px;
+    bottom: 0;
+    display: flex;
+    opacity: 0.5;
+    position: absolute;
+    font-size: 10px;
+    text-align: left;
+    align-items: center;
+  }
+  body.dark .line-0-0-19:hover {
+    background: #323232;
+  }
+@media (prefers-color-scheme: dark) {
+  body:not(.dark-mode-animate) .line-0-0-19:hover {
+    background: #323232;
+  }
+}
+  body.dark-mode-animate .line-0-0-19:hover {
+    transition: background .3s;
+  }
+  .tabs-0-0-20 .selector {
     overflow: auto;
     white-space: nowrap;
     margin-bottom: -8px;
     padding-right: 24px;
     padding-bottom: 8px;
   }
-  .tabs-0-0-18 .tab {
+  .tabs-0-0-20 .tab {
     border: 1px solid #e0e0e0;
     padding: 8px;
     border-radius: 3px;
   }
-  .tabs-0-0-18 .tab.first {
+  .tabs-0-0-20 .tab.first {
     border-top-left-radius: 0;
   }
-  body.dark-mode-animate .tabs-0-0-18 .tab {
+  body.dark-mode-animate .tabs-0-0-20 .tab {
     transition: border-color .3s;
   }
 @media (prefers-color-scheme: dark) {
-  body:not(.dark-mode-animate) .tabs-0-0-18 .tab {
+  body:not(.dark-mode-animate) .tabs-0-0-20 .tab {
     border-color: #313131;
   }
 }
-  body.dark .tabs-0-0-18 .tab {
+  body.dark .tabs-0-0-20 .tab {
     border-color: #313131;
   }
-  .tabs-0-0-18 .tab:not(.selected) {
+  .tabs-0-0-20 .tab:not(.selected) {
     display: none;
   }
-  .tabs-0-0-18 .tab>pre:first-child {
+  .tabs-0-0-20 .tab>pre:first-child {
     margin-top: 0;
   }
-  .tabs-0-0-18 .tab>pre:last-child {
+  .tabs-0-0-20 .tab>pre:last-child {
     margin-bottom: 0;
   }
-  .tabs-0-0-18 .selector button {
+  .tabs-0-0-20 .selector button {
     color: #424242;
     border: 1px solid #e0e0e0;
     cursor: pointer;
@@ -1203,7 +1261,7 @@ body.dark code {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
-  .tabs-0-0-18 .selector button:after {
+  .tabs-0-0-20 .selector button:after {
     left: 0;
     right: 0;
     bottom: -1px;
@@ -1212,44 +1270,44 @@ body.dark code {
     position: absolute;
     background: #f5f5f5;
   }
-  .tabs-0-0-18 .selector button:hover {
+  .tabs-0-0-20 .selector button:hover {
     opacity: 1;
   }
-  .tabs-0-0-18 .selector button.selected {
+  .tabs-0-0-20 .selector button.selected {
     opacity: 1;
     transform: scale(1);
   }
-  body.dark-mode-animate .tabs-0-0-18 .selector button {
+  body.dark-mode-animate .tabs-0-0-20 .selector button {
     transition: background .3s, border-color .3s, color .3s, opacity .1s, transform .1s;
   }
 @media (prefers-color-scheme: dark) {
-  body:not(.dark-mode-animate) .tabs-0-0-18 .selector button {
+  body:not(.dark-mode-animate) .tabs-0-0-20 .selector button {
     color: #eeeeee;
     background: #212121;
     border-color: #313131;
   }
-  body:not(.dark-mode-animate) .tabs-0-0-18 .selector button:after {
+  body:not(.dark-mode-animate) .tabs-0-0-20 .selector button:after {
     background: #212121;
   }
 }
-  body.dark .tabs-0-0-18 .selector button {
+  body.dark .tabs-0-0-20 .selector button {
     color: #eeeeee;
     background: #212121;
     border-color: #313131;
   }
-  .tabs-0-0-18 .selector button .icon-font {
+  .tabs-0-0-20 .selector button .icon-font {
     opacity: 0.5;
     font-size: 18px;
     margin-left: 16px;
     vertical-align: middle;
   }
-  body.dark .tabs-0-0-18 .selector button:after {
+  body.dark .tabs-0-0-20 .selector button:after {
     background: #212121;
   }
-  body.dark-mode-animate .tabs-0-0-18 .selector button:after {
+  body.dark-mode-animate .tabs-0-0-20 .selector button:after {
     transition: height .1s, bottom .1s, background .3s;
   }
-  .tabs-0-0-18 .selector button.selected:after {
+  .tabs-0-0-20 .selector button.selected:after {
     bottom: -4px;
     height: 8px;
   }
