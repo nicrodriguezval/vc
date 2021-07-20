@@ -30,7 +30,7 @@ The following example is a 24x12 mosaic made from a gif containg 500 famous pain
 
 ![paintings24x12](/docs/sketches/paintings24x12.jpg)
 
-To make this type of mosaics, with fixed number of rows and columns, the columns meaning hues and rows opacity, is necesary to load a gif image with a very large amount of images, because gifs with few images won't have all the tones for every division. So the more images a gif image to process have, the better. Also, we can choose before executing the program how many textures will be used to paint the mosaic. The sketch used to pre-process the mosaic is shown below:
+To make this type of mosaics, with fixed number of rows and columns, the columns meaning hues and rows opacity, is necesary to load a gif image with a very large amount of frames, because gifs with few frames won't have all the tones for every division. So the more images a gif image to process have, the better. Also, we can choose before executing the program how many textures will be used to paint the mosaic. The sketch used to pre-process the mosaic is shown below:
 
 > :Tabs
 > > :Tab title = Instructions
@@ -292,11 +292,11 @@ To make this type of mosaics, with fixed number of rows and columns, the columns
 
 Both the hue and the grayscale computing are simple mathematical operations that also could be applied for every superpixel, so the only information apart of the mosaic of textures that is necessary to send to the fragment shader is the numbers of rows and columns of the textures image. This gives a very fast algorithm to paint the background image, having a linear increasing of operations depending of the number of textures used for painting the mosaic. 
 
-However one of the disadvantages of using this methos would be to depending too much of the texture to draw accurate opaity an hue images, because the shader always assumes the corresponfing texture in the mosaic will be the most close to the superpixel color, and if the texture was made with poor hue / opacity range of images, the results will be far less than satisfying. Another disadvantage would be a greater pre-processing time required to generate the mosaic.
+However one of the disadvantages of using this method would be depending too much of the texture to draw accurate opacity an hue images, because the shader always assumes the corresponding texture in the mosaic will be the most close to the superpixel color, and if the texture was made with poor hue / opacity range of images, the results will be far less than satisfying. Another disadvantage would be a greater pre-processing time required to generate the mosaic.
 
 # Implementation
 
-In the right menu there is several useful indicators, like number of textured used, time ellapsed in seconds and fps and average fps through time. Also, it counts with many different options given by the selectors:
+In the right menu there is several useful indicators, like number of textures used, time ellapsed in seconds and fps and average fps through time. The debug and luma buttons also may be controlled by the keyboard pressing the "d" and "g" keys respectively. Also, it counts with many different options given by the selectors:
 
 > :Tabs
 > > :Tab title=sketch
@@ -337,6 +337,10 @@ In the right menu there is several useful indicators, like number of textured us
 > >var fpsInput;
 > >var setFpsButton;
 > >var secondsDiv;
+> >//Reset 
+> >var resetButton;
+> >var resetTime = 0;
+> >var resetFrame = 0;
 > >//Offset
 > >let rightOffset = 100;
 > >
@@ -393,9 +397,15 @@ In the right menu there is several useful indicators, like number of textured us
 > >  debugButton.mousePressed(mosaicMode);
 > >  lumaButton.mousePressed(toggleLuma);
 > >  setFpsButton.mousePressed(changeFPS);
+> >  resetButton.mousePressed(resetSeconds);
 > >  updateFPS();
 > >  updateNumTextures();
 > >  cover(true);
+> >}
+> >
+> >function resetSeconds(){
+> >  resetTime = millis();
+> >  resetFrame = frameCount;
 > >}
 > >
 > >function setBGImage(name){
@@ -509,6 +519,10 @@ In the right menu there is several useful indicators, like number of textured us
 > >  ySpace += 30;
 > >  secondsDiv = createDiv(0);
 > >  setDiv(secondsDiv,60,30,width - rightOffset + 25,ySpace,'white',20,8,8);
+> >  ySpace += 50;
+> >  resetButton = createButton('reset');
+> >  resetButton.position(width - rightOffset + 17, ySpace);
+> >  resetButton.size(80, 25);
 > >}
 > >
 > >function setDiv(divElem,sizeX,sizeY,x,y,BGcolor,Fontsize,padTop,padLeft){
@@ -559,8 +573,8 @@ In the right menu there is several useful indicators, like number of textured us
 > >}
 > >
 > >function updateAvgFPS(){
-> >  let s = millis() / 1000;
-> >  let avg = Math.round((frameCount / s)*100)/100;
+> >  let s = (millis() - resetTime) / 1000;
+> >  let avg = Math.round(((frameCount - resetFrame )/ s)*100)/100;
 > >  avgfpsDiv.html(avg);
 > >  secondsDiv.html(Math.floor(s));
 > >}

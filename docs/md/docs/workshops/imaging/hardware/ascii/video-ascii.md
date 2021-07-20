@@ -1,4 +1,5 @@
 <h1 align="center">ASCII Art on Video</h1>
+
 # Problem statement
 
 Using specialized hardware like an integrated or dedicated GPU, implement a sketch that converts a sample image into a grid composed of a set of characters. 
@@ -21,11 +22,11 @@ As we may noted by now, the floor function will keep only the integer equal or b
 
 ## Grayscale (Average / Luma) Proximity
 
-For the mosaics of a set of ASCII characters, or characters en general, we look on the opacity of every image in the image set. The main idea is to send one single texture with all the textures of characters, ordered from darkest to lightest, and with the representative pixel color computed in the fragment shader, take the most accurate texture in the set.
+For the mosaics of a set of ASCII characters, or characters en general, we look on the opacity of every image in the image set. The main idea is to send one single texture with all the textures of characters, ordered from darkest to lightest, and with the superpixel color computed in the fragment shader, take the most accurate texture in the set.
 
 ### Pre-processing
 
-To make the ordering of the source images, we created a complementary sketch that takes a gif image containing all the textures for the texture set and organizes then from the most obscure to the most bright image, which gives complete textures like the following (made with symbols of chess pieces):
+To make the ordering of the source images, we created a complementary sketch that takes a gif image containing all the textures for the texture set and organizes them from the most obscure to the most bright image, which gives complete textures like the following (made with symbols of chess pieces):
 
 ![ordered_chess](/docs/sketches/ordered_chess.png)
 
@@ -122,13 +123,13 @@ As we can see, the texture containing all textures may have more that one row, a
 
 ### RGB to Grayscale
 
-Now, to convert the original RGB representative pixel into a graycale value of opacity to match the set of textures, we implemented two algorithms inside the fragment shader: Luma and Average Grayscale.
+Now, to convert the original RGB representative pixel into a grayscale value of opacity to match the set of textures, we implemented two algorithms inside the fragment shader: Luma and Average Grayscale.
 
-Given that the luma formula is widely known to be more accurate how to human eye sees differences in luminosity, we implemented this algorithm in the shader; and to contrast with a more naive approach, we also implemented the magnitude result of the average of luminosity of every channel (red, green, blue). This options could be changed in real-time in the sketch.
+Given that the luma formula is widely known to be more accurate to how to human eye sees differences in luminosity, we implemented this algorithm in the shader; and to contrast with a more naive approach, we also implemented the magnitude result of the average of luminosity of every channel (red, green, blue). This options could be changed in real-time in the sketch.
 
 # Implementation
 
-Video autoplay is disabled for better browser compatibility. In the right menu there is several useful indicators, like number of textured used, time ellapsed in seconds and fps and average fps through time. Also, it counts with many different options given by the selectors:
+Video autoplay is disabled for better browser compatibility. In the right menu there is several useful indicators, like number of textures used, time ellapsed in seconds and fps and average fps through time. The debug and luma buttons also may be controlled by the keyboard pressing the "d" and "g" keys respectively. Also, it counts with many different options given by the selectors:
 
 > :Tabs
 > > :Tab title=sketch
@@ -167,6 +168,10 @@ Video autoplay is disabled for better browser compatibility. In the right menu t
 > >var fpsInput;
 > >var setFpsButton;
 > >var secondsDiv;
+> >//Reset 
+> >var resetButton;
+> >var resetTime = 0;
+> >var resetFrame = 0;
 > >//Offset
 > >let rightOffset = 100;
 > >
@@ -226,9 +231,15 @@ Video autoplay is disabled for better browser compatibility. In the right menu t
 > >  lumaButton.mousePressed(toggleLuma);
 > >  setFpsButton.mousePressed(changeFPS);
 > >  playButton.mousePressed(playPauseVideo);
+> >  resetButton.mousePressed(resetSeconds);
 > >  updateFPS();
 > >  updateNumTextures();
 > >  cover(true);
+> >}
+> >
+> >function resetSeconds(){
+> >  resetTime = millis();
+> >  resetFrame = frameCount;
 > >}
 > >
 > >function setBGVideo(name){
@@ -320,6 +331,10 @@ Video autoplay is disabled for better browser compatibility. In the right menu t
 > >  ySpace += 30;
 > >  secondsDiv = createDiv(0);
 > >  setDiv(secondsDiv,60,30,width - rightOffset + 25,ySpace,'white',20,8,8);
+> >  ySpace += 50;
+> >  resetButton = createButton('reset');
+> >  resetButton.position(width - rightOffset + 17, ySpace);
+> >  resetButton.size(80, 25);
 > >}
 > >
 > >function setDiv(divElem,sizeX,sizeY,x,y,BGcolor,Fontsize,padTop,padLeft){
@@ -370,8 +385,8 @@ Video autoplay is disabled for better browser compatibility. In the right menu t
 > >}
 > >
 > >function updateAvgFPS(){
-> >  let s = millis() / 1000;
-> >  let avg = Math.round((frameCount / s)*100)/100;
+> >  let s = (millis() - resetTime) / 1000;
+> >  let avg = Math.round(((frameCount - resetFrame )/ s)*100)/100;
 > >  avgfpsDiv.html(avg);
 > >  secondsDiv.html(Math.floor(s));
 > >}

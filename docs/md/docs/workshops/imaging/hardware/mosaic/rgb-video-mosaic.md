@@ -136,7 +136,7 @@ The distance between two 3-dimensional vectors is given by the length of the bla
 
 # Implementation
 
-Video autoplay is disabled for better browser compatibility. In the right menu there is several useful indicators, like number of textured used, time ellapsed in seconds and fps and average fps through time. Also, it counts with many different options given by the selectors:
+Video autoplay is disabled for better browser compatibility. In the right menu there is several useful indicators, like number of textures used, time ellapsed in seconds and fps and average fps through time. The debug button also may be controlled by the keyboard pressing the "d" key. Also, it counts with many different options given by the selectors:
 
 > :Tabs
 > > :Tab title=sketch
@@ -175,6 +175,10 @@ Video autoplay is disabled for better browser compatibility. In the right menu t
 > >var fpsInput;
 > >var setFpsButton;
 > >var secondsDiv;
+> >//Reset 
+> >var resetButton;
+> >var resetTime = 0;
+> >var resetFrame = 0;
 > >//Offset
 > >let rightOffset = 100;
 > >
@@ -245,9 +249,15 @@ Video autoplay is disabled for better browser compatibility. In the right menu t
 > >  debugButton.mousePressed(mosaicMode);
 > >  setFpsButton.mousePressed(changeFPS);
 > >  playButton.mousePressed(playPauseVideo);
+> >  resetButton.mousePressed(resetSeconds);
 > >  updateFPS();
 > >  updateNumTextures();
 > >  cover(true);
+> >}
+> >
+> >function resetSeconds(){
+> >  resetTime = millis();
+> >  resetFrame = frameCount;
 > >}
 > >
 > >function setBGVideo(name){
@@ -349,6 +359,10 @@ Video autoplay is disabled for better browser compatibility. In the right menu t
 > >  ySpace += 30;
 > >  secondsDiv = createDiv(0);
 > >  setDiv(secondsDiv,60,30,width - rightOffset + 25,ySpace,'white',20,8,8);
+> >  ySpace += 50;
+> >  resetButton = createButton('reset');
+> >  resetButton.position(width - rightOffset + 17, ySpace);
+> >  resetButton.size(80, 25);
 > >}
 > >
 > >function setDiv(divElem,sizeX,sizeY,x,y,BGcolor,Fontsize,padTop,padLeft){
@@ -399,8 +413,8 @@ Video autoplay is disabled for better browser compatibility. In the right menu t
 > >}
 > >
 > >function updateAvgFPS(){
-> >  let s = millis() / 1000;
-> >  let avg = Math.round((frameCount / s)*100)/100;
+> >  let s = (millis() - resetTime) / 1000;
+> >  let avg = Math.round(((frameCount - resetFrame )/ s)*100)/100;
 > >  avgfpsDiv.html(avg);
 > >  secondsDiv.html(Math.floor(s));
 > >}
@@ -601,6 +615,7 @@ Video autoplay is disabled for better browser compatibility. In the right menu t
 > >```
 
 # Benchmarking
+
 
 # References
 
