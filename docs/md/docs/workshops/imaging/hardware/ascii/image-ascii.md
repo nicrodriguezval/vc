@@ -120,7 +120,7 @@ As we can see, the texture containing all textures may have more that one row, a
 > >   cntImagesY[pos]++;
 > >}
 > >```
-
+ 
 ### RGB to Grayscale
 
 Now, to convert the original RGB representative pixel into a grayscale value of opacity to match the set of textures, we implemented two algorithms inside the fragment shader: Luma and Average Grayscale.
