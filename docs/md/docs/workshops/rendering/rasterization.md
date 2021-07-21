@@ -25,7 +25,7 @@ So, what are barycentric coordinates? they can be used to express the position o
 > 
 > P = uA + uB + wC
 
-Where [A](:Formula), [B](:Formula), [C](:Formula) are the triangle's vertices and [u](:Formula), [v](:Formula), [w](:Formula) the barycentric cordinates, where [u + v + w = 1](:Formula) (v.c. are normalized). The point [P](:Formula) is within the triangle if [0 \leq u, v, w \leq 1](:Formula), if any point is zero means that the point is on the edge, and if any point is negative or greater than one that's because it is outside the triangle.
+Where [A](:Formula), [B](:Formula), [C](:Formula) are the triangle's vertices and [u](:Formula), [v](:Formula), [w](:Formula) the barycentric coordinates, where [u + v + w = 1](:Formula) (v.c. are normalized). The point [P](:Formula) is within the triangle if [0 \leq u, v, w \leq 1](:Formula), if any point is zero means that the point is on the edge, and if any point is negative or greater than one that's because it is outside the triangle.
 
 >:P5 width=285, height=285
 >

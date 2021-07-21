@@ -30,10 +30,8 @@ The grayscale is a kind of image which represents the amount of light of every p
 > >let img;
 > >
 > >function preload() {
-> >  //theShader = loadShader('/vc/docs/sketches/hardware/grayscale/shader.vert', '/vc/docs/sketches/hardware/grayscale/texture.frag');
 > >  theShader = loadShader('shader.vert', 'texture.frag');
 > >  
-> >  //img = loadImage('/vc/docs/sketches/lenna.png');
 > >  img = loadImage('lenna.png');
 > >}
 > >
