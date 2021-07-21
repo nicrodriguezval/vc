@@ -14,6 +14,10 @@ When scenes are being rendered, each pixel has two differents coordinates *X* an
 
 This algorithm has the advantage that increases rendering speed for opaque objects, but transparent objects don't benefit since the distant objects are partially invisible and must be fully rendered.
 
+Z-buffering was first described in 1974 by Wolfgang Straßer in his PhD thesis on fast algorithms for rendering occluded objects. Later that year, Edwin Catmull invented the concept of Z-buffer. 
+
+Due to a bad management of a significant chunk of the available memory bandwidth, a lot of methods have been employed to reduce the performance cost of z-buffering, such as lossless compression, and ultra-fast hardware z-clear that makes obsolete the "one frame positive, one frame negative" trick. These changes were implemented since 1999.
+
 ## Z-buffer representation
 
 >:P5 width=360, height=240
@@ -149,6 +153,10 @@ This algorithm has the advantage that increases rendering speed for opaque objec
 
 # Conclusions
 + Z-buffer is an algorithm that is better to use in situations where don't exist invisible objects, because in that case the position of that ones should be calculated using a different way.
+
++ Z-buffer is a great algorithm to represent 3d escenarios in a 2 dimensional array.
+
++ A lot of improvements have been imlemented in the Z-buffer algorithm since it was created in 1974.
 
 # Future work
 + ...
