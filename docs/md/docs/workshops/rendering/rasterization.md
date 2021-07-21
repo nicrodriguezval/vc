@@ -44,7 +44,7 @@ Where [A](:Formula), [B](:Formula), [C](:Formula) are the triangle's vertices an
 
 # Code (solution) and results
 
-> :P5 sketch=/docs/sketches/rendering/.js, width=740, height=400
+> :P5 sketch=/docs/sketches/rendering/barycentricCoordinates.js, width=800, height=400
 
 # Conclusions
 + ...
