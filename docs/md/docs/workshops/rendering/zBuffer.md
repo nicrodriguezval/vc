@@ -12,6 +12,78 @@ Realizar una indagación teórica de algún [algoritmo de visibilidad](https://e
 
 When scenes are being rendered, each pixel has two differents coordinates *X* and *Y* (horizontal and vertical orientation to the camera), and a *Z* coordinate (distance from the camera). The z-buffer is a two-dimensional array that stores the Z-value of each screen pixel. If another object must be rendered at the same pixel location (*X*, *Y*), the algorithm compares which Z-value is closer to the camera, if the first one is deeper than the second one, then the algorithm overrides the oldest value. The Z-Buffer algorithm tries to reproduce the usual way we perceive the objects in the real world, a closer object hides a further one.
 
+That said, let’s consider an example to understand the algorithm in a better way. In starting, assume that the depth of each pixel is infinite.
+
+>:P5 width=360, height=240
+>
+> let img;
+>
+> function preload() {
+>   img = loadImage("/vc/docs/sketches/rendering/Zbuffer1.png");
+> }
+>
+> function setup() {
+>   createCanvas(360, 240);
+>   image(img, 0, 0, width, height);
+>
+>   frameRate(1);
+> }
+
+As the z value i.e, the depth value at every place in the given polygon is 3, 2, 1 or 0, on applying the algorithm, the result is.
+
+>:P5 width=360, height=240
+>
+> let img;
+>
+> function preload() {
+>   img = loadImage("/vc/docs/sketches/rendering/Zbuffer2.png");
+> }
+>
+> function setup() {
+>   createCanvas(360, 240);
+>   image(img, 0, 0, width, height);
+>
+>   frameRate(1);
+> }
+
+Therefore, in the Z buffer method, each surface is processed separately one position at a time across the surface. After that the depth values i.e, the z values for a pixel are compared and the closest i.e, (smallest z) surface determines the color to be displayed in frame buffer. The z values, i.e, the depth values are usually normalized to the range [0, 1]. When the z = 0, it is known as Back Clipping Pane and when z = 1, it is called as the Front Clipping Pane.
+
+In this method, 2 buffers are used :
+
++ Frame buffer
++ Depth buffer
+
+And, how is the depth calculated? As we know that the equation of the plane is : ax+by+cz+d=0 which implies z=-(ax+by+d)/c, c!= 0
+
+Calculation of each depth could be very expensive, but the computation can be reduced to a single add per pixel by using an increment method as shown in figure below :
+
+>:P5 width=360, height=240
+>
+> let img;
+>
+> function preload() {
+>   img = loadImage("/vc/docs/sketches/rendering/Zbuffer3.png");
+> }
+>
+> function setup() {
+>   createCanvas(360, 240);
+>   image(img, 0, 0, width, height);
+>
+>   frameRate(1);
+> }
+
+Let’s denote the depth at point A as Z and at point B as Z’. Therefore :
+
+AX + BY + CZ + D = 0 implies
+
+Z = (-AX - BY - D)/C  ------------(1)
+
+Similarly, Z' = (-A(X + 1) - BY -D)/C   ----------(2)
+
+Hence from (1) and (2), we conclude :
+
+Z' = Z - A/C  ------------(3)
+
 This algorithm has the advantage that increases rendering speed for opaque objects, but transparent objects don't benefit since the distant objects are partially invisible and must be fully rendered.
 
 Z-buffering was first described in 1974 by Wolfgang Straßer in his PhD thesis on fast algorithms for rendering occluded objects. Later that year, Edwin Catmull invented the concept of Z-buffer. 
@@ -164,6 +236,6 @@ Due to a bad management of a significant chunk of the available memory bandwidth
 # References
 1. Wikipedia contributors. (2021, 28 junio). Z-buffering. Wikipedia. https://en.wikipedia.org/wiki/Z-buffering
 2. LearnOpenGL - Depth testing. (s. f.). Depth Testing. https://learnopengl.com/Advanced-OpenGL/Depth-testing
-3. 
+3. Z-Buffer or Depth-Buffer method. geeksforgeeks. https://www.geeksforgeeks.org/z-buffer-depth-buffer-method/
 
 > :ToCPrevNext
