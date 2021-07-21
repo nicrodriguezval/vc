@@ -84,6 +84,8 @@ Hence from (1) and (2), we conclude :
 
 Z' = Z - A/C  ------------(3)
 
+Hence, calculation of depth can be done by recording the plane equation of each polygon in the (normalized) viewing coordinate system and then using the incremental method to find the depth Z.
+
 This algorithm has the advantage that increases rendering speed for opaque objects, but transparent objects don't benefit since the distant objects are partially invisible and must be fully rendered.
 
 Z-buffering was first described in 1974 by Wolfgang Straßer in his PhD thesis on fast algorithms for rendering occluded objects. Later that year, Edwin Catmull invented the concept of Z-buffer. 
@@ -229,6 +231,8 @@ Due to a bad management of a significant chunk of the available memory bandwidth
 + Z-buffer is a great algorithm to represent 3d escenarios in a 2 dimensional array.
 
 + A lot of improvements have been imlemented in the Z-buffer algorithm since it was created in 1974.
+
++ This method can be executed quickly even with many polygons, because its easy to calculate the depth of a complete row by calculating the depth of only one pixel of that row.
 
 # Future work
 + ...
