@@ -23,7 +23,7 @@ That said, let’s consider an example to understand the algorithm in a better w
 > }
 >
 > function setup() {
->   createCanvas(360, 240);
+>   createCanvas(254, 247);
 >   image(img, 0, 0, width, height);
 >
 >   frameRate(1);
@@ -40,7 +40,7 @@ As the z value i.e, the depth value at every place in the given polygon is 3, 2,
 > }
 >
 > function setup() {
->   createCanvas(360, 240);
+>   createCanvas(251, 251);
 >   image(img, 0, 0, width, height);
 >
 >   frameRate(1);
@@ -66,7 +66,7 @@ Calculation of each depth could be very expensive, but the computation can be re
 > }
 >
 > function setup() {
->   createCanvas(360, 240);
+>   createCanvas(287, 243);
 >   image(img, 0, 0, width, height);
 >
 >   frameRate(1);
