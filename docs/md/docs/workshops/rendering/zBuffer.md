@@ -14,7 +14,7 @@ When scenes are being rendered, each pixel has two differents coordinates *X* an
 
 That said, let’s consider an example to understand the algorithm in a better way. In starting, assume that the depth of each pixel is infinite.
 
->:P5 width=360, height=240
+>:P5 width=254, height=247
 >
 > let img;
 >
@@ -31,7 +31,7 @@ That said, let’s consider an example to understand the algorithm in a better w
 
 As the z value i.e, the depth value at every place in the given polygon is 3, 2, 1 or 0, on applying the algorithm, the result is.
 
->:P5 width=360, height=240
+>:P5 width=251, height=251
 >
 > let img;
 >
@@ -57,7 +57,7 @@ And, how is the depth calculated? As we know that the equation of the plane is :
 
 Calculation of each depth could be very expensive, but the computation can be reduced to a single add per pixel by using an increment method as shown in figure below :
 
->:P5 width=360, height=240
+>:P5 width=287, height=243
 >
 > let img;
 >
