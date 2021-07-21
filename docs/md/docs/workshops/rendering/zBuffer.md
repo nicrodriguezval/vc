@@ -5,9 +5,11 @@
 </div>
 
 # Problem statement
+
 Realizar una indagación teórica de algún [algoritmo de visibilidad](https://en.wikipedia.org/wiki/Hidden-surface_determination) o algún método de [iluminación global](https://en.wikipedia.org/wiki/Global_illumination#List_of_methods).
 
 # Background
+
 *Z-buffering* , also known as *depth buffering*, is a technique in [graphics programming](https://en.wikipedia.org/wiki/Computer_graphics) and was first described in 1974 by Wolfgang Straßer in his PhD thesis on fast algorithms for rendering occluded objects. Later that year, Edwin Catmull invented the concept of Z-buffer. It is used to determine whether an object (or part of an object) is visible in a scene from a certain perspective. Most of the time, this algorithm is done in hardware, but sometimes is used in software, as well. It is one solution to the visibility problem that is the problem of which rendered scenes are visible and which are hidden. 
 
 When scenes are being rendered, each pixel has two differents coordinates *X* and *Y* (horizontal and vertical orientation to the camera), and a *Z* coordinate (distance from the camera). The z-buffer is a two-dimensional array that stores the Z-value of each screen pixel. If another object must be rendered at the same pixel location (*X*, *Y*), the algorithm compares which Z-value is closer to the camera, if the first one is deeper than the second one, then the algorithm overrides the oldest value. The Z-Buffer algorithm tries to reproduce the usual way we perceive the objects in the real world, a closer object hides a further one.
@@ -111,6 +113,7 @@ Hence, calculation of depth can be done by recording the plane equation of each 
 Due to a bad management of a significant chunk of the available memory bandwidth, a lot of methods have been employed to reduce the performance cost of z-buffering, such as lossless compression, and ultra-fast hardware z-clear that makes obsolete the "*one frame positive, one frame negative*" trick. These changes were implemented since 1999.
 
 # Code (solution) and results
+
 > :Tabs
 > > :Tab title=sketch
 > >
@@ -232,23 +235,22 @@ Due to a bad management of a significant chunk of the available memory bandwidth
 > >```
 
 # Conclusions
+
 + Z-buffer is an algorithm that is better to use in situations where don't exist invisible objects, because in that case the position of that ones should be calculated using a different way.
-
 + Z-buffer is a great algorithm to represent 3d escenarios in a 2 dimensional array.
-
 + A lot of improvements have been imlemented in the Z-buffer algorithm since it was created in 1974.
-
 + This method can be executed quickly even with many polygons, because its easy to calculate the depth of a complete row by calculating the depth of only one pixel of that row.
 
 # Future work
-+ We expect to be able to use this method to represent multiple polygons in 3d escenarios using a 2 dimensional array.
 
++ We expect to be able to use this method to represent multiple polygons in 3d escenarios using a 2 dimensional array.
 + We expect to be able to implement improvements to this algorithm that haven't been implemented before, so that this method uses less resources from the machine.
 
 # References
 1. Wikipedia contributors. (2021, 28 junio). Z-buffering. Wikipedia. https://en.wikipedia.org/wiki/Z-buffering
 2. LearnOpenGL - Depth testing. (s. f.). Depth Testing. https://learnopengl.com/Advanced-OpenGL/Depth-testing
-3. Z-Buffer or Depth-Buffer method. geeksforgeeks. https://www.geeksforgeeks.org/z-buffer-depth-buffer-method/
-4. How to render z-buffer (Depth pass) image of a 3D scene. https://forum.processing.org/two/discussion/2153/how-to-render-z-buffer-depth-pass-image-of-a-3d-scene
+3. Computer Hope. (2017, 27 junio). What is z-buffering? https://www.computerhope.com/jargon/z/zbuffering.htm
+4. Z-Buffer or Depth-Buffer method. geeksforgeeks. https://www.geeksforgeeks.org/z-buffer-depth-buffer-method/
+5. How to render z-buffer (Depth pass) image of a 3D scene. https://forum.processing.org/two/discussion/2153/how-to-render-z-buffer-depth-pass-image-of-a-3d-scene
 
 > :ToCPrevNext
