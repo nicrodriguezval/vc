@@ -237,7 +237,7 @@ Due to a bad management of a significant chunk of the available memory bandwidth
 # Conclusions
 
 + Z-buffer is an algorithm that is better to use in situations where don't exist invisible objects, because in that case the position of that ones should be calculated using a different way.
-+ Z-buffer is a great algorithm to represent 3d escenarios in a 2 dimensional array.
++ Z-buffer is a great algorithm to represent 3d scenarios in a 2 dimensional array.
 + A lot of improvements have been imlemented in the Z-buffer algorithm since it was created in 1974.
 + This method can be executed quickly even with many polygons, because its easy to calculate the depth of a complete row by calculating the depth of only one pixel of that row.
 
