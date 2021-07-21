@@ -241,7 +241,9 @@ Due to a bad management of a significant chunk of the available memory bandwidth
 + This method can be executed quickly even with many polygons, because its easy to calculate the depth of a complete row by calculating the depth of only one pixel of that row.
 
 # Future work
-+ ...
++ We expect to be able to use this method to represent multiple polygons in 3d escenarios using a 2 dimensional array.
+
++ We expect to be able to implement improvements to this algorithm that haven't been implemented before, so that this method uses less resources from the machine.
 
 # References
 1. Wikipedia contributors. (2021, 28 junio). Z-buffering. Wikipedia. https://en.wikipedia.org/wiki/Z-buffering
