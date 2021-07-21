@@ -32,7 +32,7 @@
 >
 > > :Collapse label=Rendering
 > >
-> > [Z-buffer](/docs/workshops/rendering/zBuffer)
+> > [Z-buffering](/docs/workshops/rendering/zBuffer)
 > > [Rasterization](/docs/workshops/rendering/rasterization)
 >
 > [Algovis](/docs/workshops/algovis)
