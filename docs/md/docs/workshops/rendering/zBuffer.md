@@ -1,6 +1,6 @@
 <div align="center">
   <h1>
-    Z-Buffer
+    Z-buffering
   </h1>
 </div>
 
