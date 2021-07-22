@@ -335,5 +335,6 @@ Where [\lambda_0(p) + \lambda_1(p) + \lambda_2(p) = 1](:Formula).
 4. S. (2014, 15 agosto). Ray Tracing: Rendering a Triangle (Barycentric Coordinates). © 2009–2016 Scratchapixel. https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/barycentric-coordinates
 5. Barycentric Coordinates. (s. f.). OpenProcessing. https://openprocessing.org/sketch/187087/
 6. JoseMolano. (2017, 27 noviembre). CompVisualProy. GitHub repository. https://github.com/JoseMolano/CompVisualProy.git
+7. lyarevalo, diannyguarin. (2021). computacionvisual2021. GitHub repository. https://github.com/computacionvisual2021/vc
 
 > :ToCPrevNext
