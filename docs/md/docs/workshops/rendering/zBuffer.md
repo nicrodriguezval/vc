@@ -120,6 +120,8 @@ Due to a bad management of a significant chunk of the available memory bandwidth
 
 Despite every single problem the algorithm had for any reason, this technique has the advantage that increases rendering speed for opaque objects, but being aware that transparent objects don't benefit since the distant objects are partially invisible and must be fully rendered, so most of the time this algorithm is a good idea to use in most situations.
 
+So, what are other uses of this algorithm? This can be used to calculate the shadow of the objects in the scene, using the distance from the light source to the closest polygons. The Z-buffer is also used (implemented as software as opposed to hardware) for producing computer-generated special effects for films.
+
 # Code (solution) and results
 
 > :Tabs
@@ -261,5 +263,6 @@ Despite every single problem the algorithm had for any reason, this technique ha
 3. Computer Hope. (2017, 27 junio). What is z-buffering? https://www.computerhope.com/jargon/z/zbuffering.htm
 4. Z-Buffer or Depth-Buffer method. geeksforgeeks. https://www.geeksforgeeks.org/z-buffer-depth-buffer-method/
 5. How to render z-buffer (Depth pass) image of a 3D scene. https://forum.processing.org/two/discussion/2153/how-to-render-z-buffer-depth-pass-image-of-a-3d-scene
+6. Sombras arrojadas. http://repositori.uji.es/xmlui/bitstream/handle/10234/5974/tema6.pdf?sequence=1&isAllowed=y
 
 > :ToCPrevNext
