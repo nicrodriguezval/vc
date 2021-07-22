@@ -60,7 +60,7 @@ Where [v_0](:Formula), [v_1](:Formula), [v_2](:Formula) are the triangle's verti
 >   frameRate(1);
 > }
 
-To get a normalized version of the barycentric coordinates [\lambda](:Formula), before we need to know about the *edge functions* that says us how a point [p](:Formula) is related to a certain edge. For example, regarding de edges [v_0v_1, v_1v_2, v_2v_0](:Formula) and a point [p](:Formula) we've got:
+To get a normalized version of the barycentric coordinates [\lambda](:Formula), before we need to know about the *edge functions* that tell us how a point [p](:Formula) is related to a certain edge. For example, regarding de edges [v_0v_1, v_1v_2, v_2v_0](:Formula) and a point [p](:Formula) we've got:
 
 > :Formula align=center
 >
