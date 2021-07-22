@@ -72,7 +72,7 @@ To get a normalized version of the barycentric coordinates [\lambda](:Formula), 
 
 These are what we'll call the *edge functions* for every single edge on the triangle, where [F_{01}(p) + F_{12}(p) + F_{20}(p) = F_{01}(v_2) = F_{12}(v_0) = F_{20}(v_1) = 2\triangle{(v_0, v_1, v_2)}](:Formula).
 
-Already having knowledge about the *edge functions* we can define [\lambda](:Formula) as a normalized version of the barycentric coordinates with their sum always being 1:
+Already having knowledge about the *edge functions* we can define [\lambda](:Formula) as a normalized version of the barycentric coordinates:
 
 > :Formula align=center
 >
@@ -81,6 +81,8 @@ Already having knowledge about the *edge functions* we can define [\lambda](:For
 > \lambda_1(p):= \frac{F_{20}(p)}{2\triangle{(v_0, v_1, v_2)}}
 >
 > \lambda_2(p):= \frac{F_{01}(p)}{2\triangle{(v_0, v_1, v_2)}}
+
+Where [\lambda_0(p) + \lambda_1(p) + \lambda_2(p) = 1](:Formula).
 
 # Code (solution) and results
 > :Tabs
@@ -310,11 +312,16 @@ Already having knowledge about the *edge functions* we can define [\lambda](:For
 
 # Conclusions
 
-+ ...
++ The rasterization rendering technique was created a long time ago but it is still nowadays a great method to render an image solving the visibility problem.
++ The rasterization method has lots of different techniques but all of them solve the same problem using similar approaches but having different results, as well.
++ Noticing that some pixels aren't painted even if they are partially within the boundaries, the rasterization technique could be a great method to represent several images with great detail, because the borders can be as smooth as we want if we make use of other techniques like anti-aliasing as a plug-in, for example.
++ If there are enough pixels (without present a great loss of performance) until we cannot be able to notice the sawtooth illusion, the rasterization will look better without need to use another technique to smooth the borders.
 
 # Future work
 
-+ ...
++ Keep doing improvements to the barycentric coordinates technique so we can use it more often in 3D scenarios for geometric modeling applications using devices with non-high hardware requirements and at the same time without having a great loss of performance.
++ If the rasterization by barycentric coordinates is implemented using GPU hardware rather than software, this method would be an excellent way to describe and represent images that have a lot of polygons in them obtaining a great result.
++ As we know, the use of anti-aliasing in video games or even in conjunction with other techniques is an option that requires a lot of computational work, and depending on the device that is running the video game the best option is to have it disabled, therefore, it would be an important step to achieve great performance using this technique without having to have got the best requirements on our machines.
 
 # References
 

@@ -236,14 +236,15 @@ Due to a bad management of a significant chunk of the available memory bandwidth
 
 # Conclusions
 
++ Z-buffer is a technique used in several devices such as computers, smartphones, etc. In plenty of cases this technique is a great method to render 3D scenes into video games or 3D simulations because it has a good performance in these sorts of situations.
 + Z-buffer is an algorithm that is better to use in situations where don't exist invisible objects, because in that case the position of that ones should be calculated using a different way.
-+ Z-buffer is a great algorithm to represent 3d escenarios in a 2 dimensional array.
 + A lot of improvements have been imlemented in the Z-buffer algorithm since it was created in 1974.
 + This method can be executed quickly even with many polygons, because its easy to calculate the depth of a complete row by calculating the depth of only one pixel of that row.
 
 # Future work
 
-+ We expect to be able to use this method to represent multiple polygons in 3d escenarios using a 2 dimensional array.
++ We expect this technique improves in the future considerably in order to be able to use this method more efficiently to represent multiple polygons in 3d scenarios using a 2-dimensional array.
++ This method has the potential to become the main algorithm to represent different kinds of 3D scenes like in video games.
 + We expect to be able to implement improvements to this algorithm that haven't been implemented before, so that this method uses less resources from the machine.
 
 # References
