@@ -264,5 +264,6 @@ So, what are other uses of this algorithm? This can be used to calculate the sha
 4. Z-Buffer or Depth-Buffer method. geeksforgeeks. https://www.geeksforgeeks.org/z-buffer-depth-buffer-method/
 5. How to render z-buffer (Depth pass) image of a 3D scene. https://forum.processing.org/two/discussion/2153/how-to-render-z-buffer-depth-pass-image-of-a-3d-scene
 6. Sombras arrojadas. http://repositori.uji.es/xmlui/bitstream/handle/10234/5974/tema6.pdf?sequence=1&isAllowed=y
+7. Z-buffering. Computer Hope. https://www.computerhope.com/jargon/z/zbuffering.htm
 
 > :ToCPrevNext
