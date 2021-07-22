@@ -6,6 +6,10 @@
 
 # Problem statement
 
+## Propósito
+Realizar indagación teórica-práctica de [rendering](https://visualcomputing.github.io/Rendering).
+
+## Tarea
 Visualizar algún algoritmo de computación visual, e.g., image-kernels acá un [ejemplo](https://setosa.io/ev/image-kernels/) o rasterización de un triángulo empleando coordenadas baricéntricas, etc. Nota: se puede emplear la librería [p5.quadrille.js](https://objetos.github.io/p5.quadrille.js/).
 
 # Background
