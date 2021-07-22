@@ -18,7 +18,7 @@ Realizar una indagación teórica de algún [algoritmo de visibilidad](https://e
 
 When scenes are being rendered, each pixel has two differents coordinates *X* and *Y* (horizontal and vertical orientation to the camera), and a *Z* coordinate (distance from the camera). The z-buffer is a two-dimensional array that stores the Z-value of each screen pixel. If another object must be rendered at the same pixel location (*X*, *Y*), the algorithm compares which Z-value is closer to the camera, if the first one is deeper than the second one, then the algorithm overrides the oldest value. The Z-Buffer algorithm tries to reproduce the usual way we perceive the objects in the real world, a closer object hides a further one.
 
-This algorithm has the advantage that increases rendering speed for opaque objects, but transparent objects don't benefit since the distant objects are partially invisible and must be fully rendered.
+Also, it's important to know hen a new scene starts, the z-buffer is 1.0, because that is the highest value of it on a scale from 0 to 1 of depth, meaning that almost all the objects are going to have a fewer value and hence will be shown on the scene.
 
 >:P5 width=360, height=240
 >
@@ -114,7 +114,11 @@ Hence from (1) and (2), we conclude:
 
 Hence, calculation of depth can be done by recording the plane equation of each polygon in the (normalized) viewing coordinate system and then using the incremental method to find the depth Z.
 
+This algorithm has the advantage that increases rendering speed for opaque objects, but transparent objects don't benefit since the distant objects are partially invisible and must be fully rendered.
+
 Due to a bad management of a significant chunk of the available memory bandwidth, a lot of methods have been employed to reduce the performance cost of z-buffering, such as lossless compression, and ultra-fast hardware z-clear that makes obsolete the "*one frame positive, one frame negative*" trick. These changes were implemented since 1999.
+
+Despite every single problem the algorithm had for any reason, this technique has the advantage that increases rendering speed for opaque objects, but being aware that transparent objects don't benefit since the distant objects are partially invisible and must be fully rendered, so most of the time this algorithm is a good idea to use in most situations.
 
 # Code (solution) and results
 
