@@ -120,7 +120,7 @@ Due to a bad management of a significant chunk of the available memory bandwidth
 
 Despite every single problem the algorithm had for any reason, this technique has the advantage that increases rendering speed for opaque objects, but being aware that transparent objects don't benefit since the distant objects are partially invisible and must be fully rendered, so most of the time this algorithm is a good idea to use in most situations.
 
-So, what are other uses of this algorithm? This can be used to calculate the shadow of the objects in the scene, using the distance from the light source to the closest polygons. The Z-buffer is also used (implemented as software as opposed to hardware) for producing computer-generated special effects for films.
+So, what are other uses of this algorithm? This can be used to calculate the shadow of the objects in the scene, using the distance from the light source to the closest polygons. The Z-buffer is also used (implemented as software as opposed to hardware) for producing computer-generated special effects for films. Another thing this algorithm is useful for is increasing rendering speed for opaque objects, but transparent objects do not benefit since the distant objects are partially visible and must be fully rendered
 
 # Code (solution) and results
 

@@ -64,7 +64,7 @@ function drawSquares() {
             //Pintar el en canvas el punto medio de la celda analizada
             strokeWeight(3);
             stroke(153, 153, 255);
-            point(col + pointA, row + pointA);
+            point(col + pointA + 400, row + pointA);
             //Poner el color de trazo en negro para el siguiente ciclo
             stroke(0);
             //Actualizar la variable col con el valor de la ubicacion del inicio de la siguiente columna de celdas
@@ -151,7 +151,6 @@ function draw() {
     //Poner fondo blanco en el canvas
     background(255);
     pg.background(100);
-    //pg2.background(254);
     //Dibujar la cuadrícula y rasterizar el tríangulo actual
     drawSquares();
     //Grosor del trazado 
