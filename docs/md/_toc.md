@@ -29,6 +29,12 @@
 > > > >[Hue+Luma Image Mosaic](/docs/workshops/imaging/hardware/mosaic/hue-image-mosaic)
 > > > >[Hue+Luma Video Mosaic](/docs/workshops/imaging/hardware/mosaic/hue-video-mosaic)
 > > >
+> >
+> > > :Collapse label=Benchmarking
+> > >
+> > >[ASCII (Software)](/docs/workshops/imaging/benchmarking/ascii)
+> > >[Mosaic (Software)](/docs/workshops/imaging/benchmarking/mosaic)
+> >
 >
 > > :Collapse label=Rendering
 > >
