@@ -6,6 +6,10 @@
 
 # Problem statement
 
+## Propósito
+Realizar indagación teórica-práctica de [rendering](https://visualcomputing.github.io/Rendering).
+
+## Tarea
 Realizar una indagación teórica de algún [algoritmo de visibilidad](https://en.wikipedia.org/wiki/Hidden-surface_determination) o algún método de [iluminación global](https://en.wikipedia.org/wiki/Global_illumination#List_of_methods).
 
 # Background
